@@ -32,7 +32,7 @@ title: "検証済みバージョン一覧（Version Matrix）"
 | containerd | OS 標準（例） | CRI、`SystemdCgroup=true`（第4章） |
 | CNI | Calico `v3.31.4`（pinned） | `examples/k8s/addons/cni/calico/install.sh` |
 | MetalLB | `v0.15.3`（pinned） | `examples/k8s/addons/metallb/install.sh` |
-| Ingress Controller | ingress-nginx `controller-v1.14.3`（pinned） | `examples/k8s/addons/ingress-nginx/install.sh` |
+| Ingress Controller | ingress-nginx `controller-v1.14.3`（pinned） | Retirement 告知あり（best-effort は 2026年3月まで）。本番採用判断は要確認（第5章）。`examples/k8s/addons/ingress-nginx/install.sh` |
 | Storage | local-path-provisioner `v0.0.34`（pinned） | `examples/k8s/addons/storage/local-path/install.sh` |
 | サンプルアプリ | `hashicorp/http-echo:0.2.3`（base）、`latest`（検証例） | `examples/apps/sample-app/` |
 | Kustomize | kubectl 組み込み（例） | バージョンは kubectl に依存 |

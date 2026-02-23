@@ -132,8 +132,14 @@
 
                 <!-- Edit on GitHub -->
                 {% if repo_url and page.path %}
+                {% assign repo_docs_path = site.repository_docs_path | default: '' %}
+                {% if repo_docs_path and repo_docs_path != '' %}
+                    {% assign edit_path = repo_docs_path | append: '/' | append: page.path %}
+                {% else %}
+                    {% assign edit_path = page.path %}
+                {% endif %}
                 <div class="edit-page">
-                    <a href="{{ repo_url }}/edit/{{ repo_branch }}/{{ page.path }}" 
+                    <a href="{{ repo_url }}/edit/{{ repo_branch }}/{{ edit_path }}" 
                        target="_blank" 
                        rel="noopener"
                        class="edit-link">

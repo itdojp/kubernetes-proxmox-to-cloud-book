@@ -79,7 +79,15 @@ kubectl apply -f examples/k8s/addons/metallb/l2advertisement.yaml
 ## Ingress（ingress-nginx と DNS/Host 設計）
 
 アプリを `Ingress` で公開するために、Ingress Controller を導入します。
-例として ingress-nginx を使います（Kubernetes 公式プロジェクトとして運用情報が多い）。
+本書では例として ingress-nginx を使いますが、**ingress-nginx は Retirement（段階的終了）** が告知されています（best-effort メンテナンスは 2026年3月まで）。
+そのため、ここでの ingress-nginx は **検証の例示** と位置づけ、本番では組織標準/クラウド標準へ置き換える前提で読み進めてください。
+
+本番の選定観点（例）:
+
+- 運用主体: 誰がアップデート/脆弱性対応を担うか（クラウド/プラットフォーム/アプリチーム）
+- セキュリティ: CVE 対応の継続性、マルチテナント前提の安全性
+- 互換性: Gateway API 対応/移行方針（Ingress の将来性を含む）
+- 観測性: 組織標準の監視/ログ/トレースへ統合できるか
 
 インストール例（Service type=LoadBalancer を前提）:
 
@@ -134,6 +142,8 @@ bash examples/k8s/addons/storage/local-path/set-default-storageclass.sh
 - Calico（公式）: https://docs.tigera.io/calico/latest/
 - MetalLB（公式）: https://metallb.universe.tf/
 - ingress-nginx（公式）: https://kubernetes.github.io/ingress-nginx/
+- Kubernetes Blog: Ingress NGINX Retirement: https://www.kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/
+- Gateway API（公式）: https://gateway-api.sigs.k8s.io/
 - Kubernetes: Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
 - Kubernetes: Storage: https://kubernetes.io/docs/concepts/storage/
 

@@ -22,9 +22,7 @@ iface vmbr0 inet static
 
 # VM ネットワーク（Kubernetes ノード VM / MetalLB の払い出し元）
 auto vmbr1
-iface vmbr1 inet static
-  address 10.0.20.11/24
+iface vmbr1 inet manual
   bridge-ports enp2s0
   bridge-stp off
   bridge-fd 0
-

@@ -31,7 +31,7 @@ title: "第1章：Proxmox / Podman / Kubernetes の関係俯瞰"
 | Kubernetes | 宣言的なリソース管理、スケジューリング、制御 | 検証/本番 |
 | kubelet | ノード上で Pod を実行するためのノードエージェント | K8sノード |
 | containerd | コンテナ実行（CRI経由で利用されることが多い） | K8sノード |
-| Podman/Docker | 画像の build/push、開発・CIでのコンテナ利用 | 開発端末/CI |
+| Podman/Docker | コンテナイメージの build/push、開発・CIでのコンテナ利用 | 開発端末/CI |
 
 注記: 本書では、Kubernetes ノード上の実行系（runtime）と、開発/CI の build 系（engine）を分けて扱います。
 
@@ -47,8 +47,11 @@ Kubernetes の「コンテナ実行」は、主に次の境界で分割されま
 
 ### Docker と Kubernetes（dockershim の扱い）
 
-Kubernetes は以前、Docker Engine を直接扱うための仕組み（dockershim）を含んでいましたが、現在は推奨されません（削除方針が明確化されています）。
-本書では、Kubernetes ノードの runtime として containerd を前提にします。
+Kubernetes は以前、Docker Engine を直接扱う仕組み（dockershim）を含んでいましたが、dockershim は **Kubernetes v1.24 で削除済み** です。
+そのため、ノード上の runtime は CRI 準拠（例: containerd）を前提にします。
+
+一方で、Docker/Podman は **コンテナイメージの build/push 用途** としては引き続き有効です。
+「ノード runtime（実行）」と「開発/CI の build（生成）」を混同しないことが、検証→本番での再現性と運用設計に直結します。
 
 ## Podman の位置づけ（本書の前提）
 

@@ -12,6 +12,8 @@ url: "https://itdojp.github.io"
 # Repository information for edit links
 repository: "itdojp/kubernetes-proxmox-to-cloud-book"
 repository_branch: "main"
+# GitHub 上の実ファイルパス（本リポジトリは docs/ 配下を Pages として配信）
+repository_docs_path: "docs"
 
 contact:
   email: "knowledge@itdo.jp"

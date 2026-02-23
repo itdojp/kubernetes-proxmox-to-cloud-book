@@ -96,6 +96,14 @@ sudo pvecm status
 | 管理（PVE） | `10.0.10.0/24` | Proxmox UI / pvecm |
 | VM（K8sノード） | `10.0.20.0/24` | kubeadm ノード、MetalLB の IP Pool |
 
+本書は IP 衝突を避けるため、**VM ネットワーク側の Proxmox ホスト（`vmbr1`）は IP を持たせない（`inet manual`）** 方針にします。
+
+- Proxmox ホストの管理/クラスタ通信は管理ネットワーク（`vmbr0`）へ寄せる
+- VM（Kubernetes ノード）へ `10.0.20.11/21/22...` のように静的 IP を割り当てる
+- MetalLB の IP pool は VM の静的 IP と衝突しないレンジに固定する（例: `10.0.20.200-250`）
+
+注記: ホスト側も VM ネットワークへ参加させたい場合は、ホスト用レンジと VM 用レンジを分離し、本文・examples の IP 例を一貫して更新してください（“その場しのぎ” は事故要因になります）。
+
 `/etc/network/interfaces` の例は `examples/proxmox/network/interfaces.example` に置きます（環境に合わせて NIC 名や VLAN を調整してください）。
 
 ## VM 設計例（control-plane 1 + worker 2）
