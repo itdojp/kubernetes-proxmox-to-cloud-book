@@ -4,13 +4,22 @@ kind: Kustomization
 resources:
   - ../../base
 
+configMapGenerator:
+  - name: sample-app-config
+    behavior: merge
+    literals:
+      - TEXT=sample-app (cloud-prod)
+
 patches:
-  - path: patch-service-loadbalancer.yaml
-    target:
-      kind: Service
-      name: sample-app
   - path: patch-replicas.yaml
     target:
       kind: Deployment
       name: sample-app
-
+  - path: patch-resources.yaml
+    target:
+      kind: Deployment
+      name: sample-app
+  - path: patch-ingress-host.yaml
+    target:
+      kind: Ingress
+      name: sample-app

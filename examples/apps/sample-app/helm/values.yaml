@@ -5,6 +5,9 @@ image:
   tag: "0.2.3"
   pullPolicy: IfNotPresent
 
+app:
+  text: "sample-app (helm)"
+
 service:
   type: ClusterIP
   port: 80
@@ -14,6 +17,14 @@ ingress:
   className: nginx
   host: sample-app.local
   path: /
+
+probes:
+  readiness:
+    initialDelaySeconds: 2
+    periodSeconds: 5
+  liveness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
 
 resources:
   requests:

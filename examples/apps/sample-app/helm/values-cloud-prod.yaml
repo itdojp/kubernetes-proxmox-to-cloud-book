@@ -1,0 +1,21 @@
+replicaCount: 3
+
+image:
+  repository: docker.io/hashicorp/http-echo
+  tag: "0.2.3"
+
+app:
+  text: "sample-app (helm cloud-prod)"
+
+ingress:
+  enabled: true
+  host: sample-app.example.com
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+

@@ -15,21 +15,28 @@ title: "検証済みバージョン一覧（Version Matrix）"
 
 - 2026-02-23
 
-## 検証対象（ドラフト）
+## 検証対象（執筆時点の例示）
 
-現時点では未確定です。検証を進め次第、更新します。
+本リポジトリの CI は「Kubernetes クラスタの実機構築」までを自動検証していません。
+そのため本章では、次の 2 つを分けて記載します。
 
-| コンポーネント | バージョン | 備考 |
+- `examples/` が参照する **pinned（固定）版**
+- 構築手順が想定する **範囲（例示）**
+
+実機検証を進めた時点で「検証済み（環境条件付き）」として更新します。
+
+| コンポーネント | バージョン（例示/pinned） | 備考 |
 | --- | --- | --- |
-| Proxmox VE | 未確定 | 3ノード |
-| Kubernetes | 未確定 | kubeadm |
-| containerd | 未確定 | CRI |
-| CNI | 未確定 | 複数候補 |
-| MetalLB | 未確定 | L2/BGPは要件次第 |
-| Ingress Controller | 未確定 | 複数候補 |
-| Storage | 未確定 | 差分の主因 |
-| Kustomize | 未確定 | kubectl同梱/単体 |
-| Helm | 未確定 | v3 想定 |
+| Proxmox VE | 環境依存 | 3ノード（第3章） |
+| Kubernetes | v1.35 系（例） | kubeadm（第4章） |
+| containerd | OS 標準（例） | CRI、`SystemdCgroup=true`（第4章） |
+| CNI | Calico `v3.31.4`（pinned） | `examples/k8s/addons/cni/calico/install.sh` |
+| MetalLB | `v0.15.3`（pinned） | `examples/k8s/addons/metallb/install.sh` |
+| Ingress Controller | ingress-nginx `controller-v1.14.3`（pinned） | `examples/k8s/addons/ingress-nginx/install.sh` |
+| Storage | local-path-provisioner `v0.0.34`（pinned） | `examples/k8s/addons/storage/local-path/install.sh` |
+| サンプルアプリ | `hashicorp/http-echo:0.2.3`（base）、`latest`（検証例） | `examples/apps/sample-app/` |
+| Kustomize | kubectl 組み込み（例） | バージョンは kubectl に依存 |
+| Helm | v3 系（例） | 章で取り扱い（第9章〜） |
 
 ## 更新方針（ドラフト）
 
@@ -46,4 +53,3 @@ Version Matrix は、環境差分の判断基準として維持します。
 - [ ] 手元の環境が想定とどこで違うかを確認した
 - [ ] 本番利用前に公式情報を確認する方針を理解した
 - [ ] 更新時の扱い（マイナー/メジャー）を理解した
-

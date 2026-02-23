@@ -1,0 +1,10 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    # 注意: VM ネットワークの空き帯域へ必ず合わせてください（例: 10.0.20.200-250）
+    - 10.0.20.200-10.0.20.250
+

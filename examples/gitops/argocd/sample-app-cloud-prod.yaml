@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sample-app-proxmox-dev
+  name: sample-app-cloud-prod
   namespace: argocd
 spec:
   project: sample-app
   source:
     repoURL: https://github.com/itdojp/kubernetes-proxmox-to-cloud-book.git
     targetRevision: main
-    path: examples/apps/sample-app/kustomize/overlays/proxmox-dev
+    path: examples/apps/sample-app/kustomize/overlays/cloud-prod
   destination:
     server: https://kubernetes.default.svc
     namespace: sample-app

@@ -1,0 +1,13 @@
+replicaCount: 1
+
+image:
+  repository: docker.io/hashicorp/http-echo
+  tag: "latest"
+
+app:
+  text: "sample-app (helm proxmox-dev)"
+
+ingress:
+  enabled: true
+  host: sample-app.local
+

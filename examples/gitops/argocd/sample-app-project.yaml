@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: sample-app
+  namespace: argocd
+spec:
+  description: "Sample App project (kubernetes-proxmox-to-cloud-book)"
+  sourceRepos:
+    - https://github.com/itdojp/kubernetes-proxmox-to-cloud-book.git
+  destinations:
+    - namespace: sample-app
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+

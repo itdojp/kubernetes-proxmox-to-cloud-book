@@ -1,0 +1,30 @@
+# /etc/network/interfaces（例）
+#
+# 注意:
+# - NIC 名（例: enp1s0）は環境で異なります
+# - VLAN を使う場合は enp1s0.10 のような VLAN IF を bridge-ports に指定します
+# - アドレス/ゲートウェイは自環境に合わせて変更してください
+
+auto lo
+iface lo inet loopback
+
+iface enp1s0 inet manual
+iface enp2s0 inet manual
+
+# 管理ネットワーク（Proxmox UI / pvecm 通信）
+auto vmbr0
+iface vmbr0 inet static
+  address 10.0.10.11/24
+  gateway 10.0.10.1
+  bridge-ports enp1s0
+  bridge-stp off
+  bridge-fd 0
+
+# VM ネットワーク（Kubernetes ノード VM / MetalLB の払い出し元）
+auto vmbr1
+iface vmbr1 inet static
+  address 10.0.20.11/24
+  bridge-ports enp2s0
+  bridge-stp off
+  bridge-fd 0
+

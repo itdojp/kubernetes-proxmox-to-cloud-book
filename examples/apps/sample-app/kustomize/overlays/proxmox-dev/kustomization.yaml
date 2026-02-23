@@ -4,9 +4,12 @@ kind: Kustomization
 resources:
   - ../../base
 
-patches:
-  - path: patch-service-loadbalancer.yaml
-    target:
-      kind: Service
-      name: sample-app
+images:
+  - name: docker.io/hashicorp/http-echo
+    newTag: latest
 
+configMapGenerator:
+  - name: sample-app-config
+    behavior: merge
+    literals:
+      - TEXT=sample-app (proxmox-dev)
