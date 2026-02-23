@@ -1,0 +1,54 @@
+title: "Kubernetes: Proxmox検証からクラウド本番へ"
+subtitle: "現実的な差分吸収と運用設計"
+description: "Proxmox上の検証Kubernetesからクラウド上の本番Kubernetesへ移行するための設計・手順・運用を、現実的な差分（LB/Storage/Identity/Observability等）を前提に整理する実務ガイド。"
+author: "ITDO Inc."
+version: "0.1.0"
+lang: "ja"
+
+# GitHub Pages設定
+baseurl: "/kubernetes-proxmox-to-cloud-book"
+url: "https://itdojp.github.io"
+
+# Repository information for edit links
+repository: "itdojp/kubernetes-proxmox-to-cloud-book"
+repository_branch: "main"
+
+contact:
+  email: "knowledge@itdo.jp"
+
+license_text: "本作品は CC BY-NC-SA 4.0 で提供します（商用利用は別途契約が必要です）。"
+
+# Jekyll設定
+markdown: kramdown
+highlighter: rouge
+
+# Kramdown設定
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Defaults: use custom book layout as default
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "book"
+
+plugins:
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+
+permalink: pretty
+
+exclude:
+  - node_modules/
+  - vendor/
+  - .bundle/
+  - scripts/
+  - templates/
+  - src/
+  - package*.json
+  - README.md
+  - "*.tmp"
+  - Gemfile*

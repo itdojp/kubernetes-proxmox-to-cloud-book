@@ -1,0 +1,7 @@
+apiVersion: v2
+name: sample-app
+description: Sample app for kubernetes-proxmox-to-cloud-book
+type: application
+version: 0.1.0
+appVersion: "0.2.3"
+

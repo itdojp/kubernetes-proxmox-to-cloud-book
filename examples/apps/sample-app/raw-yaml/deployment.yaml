@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-app
+  namespace: sample-app
+  labels:
+    app.kubernetes.io/name: sample-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: sample-app
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: sample-app
+    spec:
+      containers:
+        - name: http-echo
+          image: docker.io/hashicorp/http-echo:0.2.3
+          args:
+            - "-listen=:5678"
+            - "-text=sample-app (raw-yaml)"
+          ports:
+            - name: http
+              containerPort: 5678
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+

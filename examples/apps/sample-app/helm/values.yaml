@@ -1,0 +1,25 @@
+replicaCount: 1
+
+image:
+  repository: docker.io/hashicorp/http-echo
+  tag: "0.2.3"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: nginx
+  host: sample-app.local
+  path: /
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
+

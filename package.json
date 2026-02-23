@@ -1,0 +1,18 @@
+{
+  "name": "kubernetes-proxmox-to-cloud-book",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Proxmox 検証Kubernetesからクラウド本番Kubernetesへ移行するための設計・手順・運用ガイド",
+  "license": "CC-BY-NC-SA-4.0",
+  "author": "ITDO Inc.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itdojp/kubernetes-proxmox-to-cloud-book.git"
+  },
+  "scripts": {
+    "dev": "cd docs && bundle exec jekyll serve --livereload --baseurl ''",
+    "build": "cd docs && bundle exec jekyll build",
+    "dev:podman": "bash scripts/jekyll-podman.sh serve",
+    "build:podman": "bash scripts/jekyll-podman.sh build"
+  }
+}

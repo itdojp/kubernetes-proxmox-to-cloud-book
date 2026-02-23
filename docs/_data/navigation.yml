@@ -1,0 +1,53 @@
+# Navigation configuration
+introduction:
+  - title: "本書の目的と前提"
+    path: "/introduction/preface/"
+  - title: "Quickstart（最短で成功体験）"
+    path: "/introduction/quickstart/"
+  - title: "読み方ガイド（読者タイプ別）"
+    path: "/introduction/reading-guide/"
+  - title: "ライセンスFAQ"
+    path: "/introduction/license-faq/"
+
+chapters:
+  - title: "第1章：Proxmox / Podman / Kubernetes の関係俯瞰"
+    path: "/chapters/chapter-01/"
+  - title: "第2章：検証→本番を現実的にする設計原則"
+    path: "/chapters/chapter-02/"
+  - title: "第3章：Proxmox VE 3ノード検証基盤"
+    path: "/chapters/chapter-03/"
+  - title: "第4章：Kubernetesクラスタ構築（kubeadm + containerd）"
+    path: "/chapters/chapter-04/"
+  - title: "第5章：追加コンポーネント（CNI / MetalLB / Ingress / Storage）"
+    path: "/chapters/chapter-05/"
+  - title: "第6章：サンプルアプリ（raw YAML）で基本動作確認"
+    path: "/chapters/chapter-06/"
+  - title: "第7章：Kustomize 基礎"
+    path: "/chapters/chapter-07/"
+  - title: "第8章：Kustomize 実務"
+    path: "/chapters/chapter-08/"
+  - title: "第9章：Helm 基礎"
+    path: "/chapters/chapter-09/"
+  - title: "第10章：Helm運用とアンチパターン"
+    path: "/chapters/chapter-10/"
+  - title: "第11章：GitOps/CI/CD（検証→本番の流れ）"
+    path: "/chapters/chapter-11/"
+  - title: "第12章：本番運用（監視/ログ/セキュリティ/バックアップ/アップグレード）"
+    path: "/chapters/chapter-12/"
+
+appendices:
+  - title: "付録：検証済みバージョン一覧（Version Matrix）"
+    path: "/appendices/version-matrix/"
+  - title: "付録：トラブルシューティング"
+    path: "/appendices/troubleshooting/"
+  - title: "付録：用語集"
+    path: "/appendices/glossary/"
+  - title: "付録：更新履歴とメンテ方針"
+    path: "/appendices/update-notes/"
+
+afterword:
+  - title: "あとがき"
+    path: "/afterword/"
+  - title: "奥付"
+    path: "/afterword/colophon/"
+

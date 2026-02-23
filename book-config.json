@@ -1,0 +1,169 @@
+{
+  "title": "Kubernetes: Proxmox検証からクラウド本番へ",
+  "subtitle": "現実的な差分吸収と運用設計",
+  "description": "Proxmox上の検証Kubernetesからクラウド上の本番Kubernetesへ移行するための設計・手順・運用を、現実的な差分（LB/Storage/Identity/Observability等）を前提に整理する実務ガイド。",
+  "author": "ITDO Inc.",
+  "version": "0.1.0",
+  "language": "ja",
+  "license": "CC-BY-NC-SA-4.0",
+  "repository": {
+    "url": "https://github.com/itdojp/kubernetes-proxmox-to-cloud-book.git",
+    "branch": "main"
+  },
+  "structure": {
+    "introduction": [
+      {
+        "id": "preface",
+        "title": "本書の目的と前提",
+        "path": "/introduction/preface/",
+        "description": "目的/想定読者/検証環境/読み方/フィードバック窓口"
+      },
+      {
+        "id": "quickstart",
+        "title": "Quickstart（最短で成功体験）",
+        "path": "/introduction/quickstart/",
+        "description": "3ノード最小構成でサンプルアプリを動かす（最短ルート）"
+      },
+      {
+        "id": "reading-guide",
+        "title": "読み方ガイド（読者タイプ別）",
+        "path": "/introduction/reading-guide/",
+        "description": "読者タイプ別の推奨ルート（Kustomize→Helmの学習順序含む）"
+      },
+      {
+        "id": "license-faq",
+        "title": "ライセンスFAQ",
+        "path": "/introduction/license-faq/",
+        "description": "非営利利用/商用利用/引用の扱い（概要）"
+      }
+    ],
+    "chapters": [
+      {
+        "id": "chapter-01",
+        "title": "第1章：Proxmox / Podman / Kubernetes の関係俯瞰",
+        "path": "/chapters/chapter-01/",
+        "description": "Dockerとの違いを含め、責務と境界を整理する"
+      },
+      {
+        "id": "chapter-02",
+        "title": "第2章：検証→本番を現実的にする設計原則",
+        "path": "/chapters/chapter-02/",
+        "description": "Proxmox検証からクラウド本番へ移す前提（差分吸収/抽象化/再現性）を整理する"
+      },
+      {
+        "id": "chapter-03",
+        "title": "第3章：Proxmox VE 3ノード検証基盤",
+        "path": "/chapters/chapter-03/",
+        "description": "ネットワーク/ストレージ/VM設計（検証前提の実務設計）"
+      },
+      {
+        "id": "chapter-04",
+        "title": "第4章：Kubernetesクラスタ構築（kubeadm + containerd）",
+        "path": "/chapters/chapter-04/",
+        "description": "kubeadm と containerd による最小構成の構築手順と注意点"
+      },
+      {
+        "id": "chapter-05",
+        "title": "第5章：追加コンポーネント（CNI / MetalLB / Ingress / Storage）",
+        "path": "/chapters/chapter-05/",
+        "description": "検証環境で必ず差分が出るアドオンを整理し、選定・構築する"
+      },
+      {
+        "id": "chapter-06",
+        "title": "第6章：サンプルアプリ（raw YAML）で基本動作確認",
+        "path": "/chapters/chapter-06/",
+        "description": "raw YAML でKubernetesの基本動作を確認し、以後の抽象化へ繋げる"
+      },
+      {
+        "id": "chapter-07",
+        "title": "第7章：Kustomize 基礎",
+        "path": "/chapters/chapter-07/",
+        "description": "base/overlay、patch、generator を扱う"
+      },
+      {
+        "id": "chapter-08",
+        "title": "第8章：Kustomize 実務",
+        "path": "/chapters/chapter-08/",
+        "description": "環境差分、Secrets、運用パターン（チーム運用視点）"
+      },
+      {
+        "id": "chapter-09",
+        "title": "第9章：Helm 基礎",
+        "path": "/chapters/chapter-09/",
+        "description": "Chart/values、テンプレート、release の基本を押さえる"
+      },
+      {
+        "id": "chapter-10",
+        "title": "第10章：Helm運用とアンチパターン",
+        "path": "/chapters/chapter-10/",
+        "description": "Helm-only のデメリット、Kustomize→Helm 学習メリットを整理する"
+      },
+      {
+        "id": "chapter-11",
+        "title": "第11章：GitOps/CI/CD（検証→本番の流れ）",
+        "path": "/chapters/chapter-11/",
+        "description": "差分吸収戦略と運用フロー（PR/環境/リリース）"
+      },
+      {
+        "id": "chapter-12",
+        "title": "第12章：本番運用（監視/ログ/セキュリティ/バックアップ/アップグレード）",
+        "path": "/chapters/chapter-12/",
+        "description": "運用の最低ライン（監視・ログ・セキュリティ・バックアップ・更新）"
+      }
+    ],
+    "appendices": [
+      {
+        "id": "version-matrix",
+        "title": "付録：検証済みバージョン一覧（Version Matrix）",
+        "path": "/appendices/version-matrix/",
+        "description": "執筆時点の検証対象と更新方針"
+      },
+      {
+        "id": "troubleshooting",
+        "title": "付録：トラブルシューティング",
+        "path": "/appendices/troubleshooting/",
+        "description": "代表的な障害と切り分け（フロー形式）"
+      },
+      {
+        "id": "glossary",
+        "title": "付録：用語集",
+        "path": "/appendices/glossary/",
+        "description": "本書で扱う用語の定義"
+      },
+      {
+        "id": "update-notes",
+        "title": "付録：更新履歴とメンテ方針",
+        "path": "/appendices/update-notes/",
+        "description": "CHANGELOG導線と更新方針"
+      }
+    ],
+    "afterword": [
+      {
+        "id": "afterword",
+        "title": "あとがき",
+        "path": "/afterword/",
+        "description": "まとめと次のステップ"
+      },
+      {
+        "id": "colophon",
+        "title": "奥付",
+        "path": "/afterword/colophon/",
+        "description": "連絡先/初版/現行版"
+      }
+    ]
+  },
+  "ux": {
+    "profile": "B",
+    "modules": {
+      "quickStart": true,
+      "readingGuide": true,
+      "checklistPack": true,
+      "troubleshootingFlow": true,
+      "conceptMap": false,
+      "figureIndex": true,
+      "legalNotice": false,
+      "glossary": true
+    }
+  }
+}
+

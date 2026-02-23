@@ -1,0 +1,18 @@
+node_modules/
+
+# Jekyll (under docs/)
+docs/_site/
+docs/.jekyll-cache/
+docs/.sass-cache/
+docs/.bundle/
+docs/vendor/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Temp
+*.tmp
+
