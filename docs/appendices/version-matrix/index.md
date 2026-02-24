@@ -29,6 +29,7 @@ title: "検証済みバージョン一覧（Version Matrix）"
 | --- | --- | --- |
 | Proxmox VE | 環境依存 | 3ノード（第3章） |
 | Kubernetes | v1.35 系（例） | kubeadm（第4章） |
+| kubeadm config API | `kubeadm.k8s.io/v1beta4`（例示） | `examples/k8s/bootstrap/kubeadm-init.yaml` |
 | containerd | OS 標準（例） | CRI、`SystemdCgroup=true`（第4章） |
 | CNI | Calico `v3.31.4`（pinned） | `examples/k8s/addons/cni/calico/install.sh` |
 | MetalLB | `v0.15.3`（pinned） | `examples/k8s/addons/metallb/install.sh` |

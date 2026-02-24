@@ -102,6 +102,9 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 `kubeadm init` は「クラスタの初期化（証明書、マニフェスト生成、kubelet 設定）」を行います。
 例として `examples/k8s/bootstrap/kubeadm-init.yaml` を使います（IP 等は環境に合わせて編集してください）。
+本書の例は kubeadm config API の **`kubeadm.k8s.io/v1beta4`**（Kubernetes v1.35 系の前提）を採用します。
+
+過去の設定（例: v1beta3）を持っている場合は、`kubeadm config migrate` で変換できます（公式参照）。
 
 ```bash
 sudo kubeadm init --config examples/k8s/bootstrap/kubeadm-init.yaml
@@ -157,6 +160,8 @@ kubectl get pods -A
 
 - Kubernetes: Installing kubeadm: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 - Kubernetes: Creating a cluster with kubeadm: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+- kubeadm config API（v1beta4）: https://kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta4/
+- kubeadm config migrate: https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-config/#cmd-config-migrate
 - Kubernetes: Container runtimes: https://kubernetes.io/docs/setup/production-environment/container-runtimes/
 - kubeadm: Upgrade: https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 

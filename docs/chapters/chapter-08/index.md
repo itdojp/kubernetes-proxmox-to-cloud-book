@@ -35,6 +35,7 @@ title: "第8章：Kustomize 実務"
 - image tag: `latest`（例示。実務では pin 推奨）
 - ConfigMap: `TEXT=sample-app (proxmox-dev)`
 - Ingress host: `sample-app.local`（base と同一）
+- IngressClass: `nginx`（例。Ingress Controller に依存）
 - replicas/resources: base を踏襲
 
 適用例:
@@ -48,6 +49,7 @@ kubectl apply -k examples/apps/sample-app/kustomize/overlays/proxmox-dev
 - replicas: 3（例）
 - resources: request/limit を引き上げ（例）
 - Ingress host: `sample-app.example.com`（例）
+- IngressClass: `alb` 等（例。クラウド側で Controller が変わると class も変わる）
 - image tag: base（`0.2.3`）を踏襲（pin）
 - ConfigMap: `TEXT=sample-app (cloud-prod)`
 
@@ -56,6 +58,11 @@ kubectl apply -k examples/apps/sample-app/kustomize/overlays/proxmox-dev
 ```bash
 kubectl apply -k examples/apps/sample-app/kustomize/overlays/cloud-prod
 ```
+
+注記:
+
+- Ingress の差分は host だけではありません。Controller が変わると `spec.ingressClassName` も差分になります。
+- 本書のサンプルでは cloud-prod overlay に `patch-ingress-class.yaml`（json6902）を用意し、環境に合わせて変更できるようにしています。
 
 ## image tag/registry 差分（現実解）
 

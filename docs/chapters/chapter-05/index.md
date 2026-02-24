@@ -132,7 +132,7 @@ bash examples/k8s/addons/storage/local-path/set-default-storageclass.sh
 | 領域 | 検証（Proxmox） | 本番（クラウド） |
 | --- | --- | --- |
 | LB | MetalLB | Cloud LB |
-| Ingress | ingress-nginx（例） | 組織標準（ALB Ingress Controller 等を含む） |
+| Ingress | ingress-nginx（例） | 組織標準（例: AWS Load Balancer Controller。旧称: ALB Ingress Controller） |
 | Storage | local-path/NFS 等 | Cloud CSI（マネージド） |
 | Identity | 最小（kubeconfig/ローカル） | IAM/SSO/RBAC 統合 |
 

@@ -19,6 +19,10 @@ patches:
     target:
       kind: Deployment
       name: sample-app
+  - path: patch-ingress-class.yaml
+    target:
+      kind: Ingress
+      name: sample-app
   - path: patch-ingress-host.yaml
     target:
       kind: Ingress
