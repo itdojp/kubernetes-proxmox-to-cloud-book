@@ -23,7 +23,7 @@ title: "トラブルシューティング"
 ```bash
 kubectl get nodes -o wide
 kubectl get pods -A
-kubectl get events -A --sort-by=.lastTimestamp | tail -n 50
+kubectl get events -A --sort-by=.metadata.creationTimestamp | tail -n 50
 ```
 
 ノード側（Linux）:

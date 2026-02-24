@@ -51,7 +51,7 @@ swap 無効化（破壊的操作）:
 
 ```bash
 sudo swapoff -a
-sudo sed -i.bak '/\\sswap\\s/s/^/#/' /etc/fstab
+sudo sed -i.bak '/^[[:space:]]*[^#[:space:]].*[[:space:]]swap[[:space:]]/ s/^/#/' /etc/fstab
 ```
 
 ## containerd インストールと設定（共通）

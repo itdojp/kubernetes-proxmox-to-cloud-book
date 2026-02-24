@@ -104,7 +104,11 @@ sudo sysctl --system
 
 # swap（全ノード、破壊的操作）
 sudo swapoff -a
-sudo sed -i.bak '/\\sswap\\s/s/^/#/' /etc/fstab
+sudo sed -i.bak '/^[[:space:]]*[^#[:space:]].*[[:space:]]swap[[:space:]]/ s/^/#/' /etc/fstab
+
+# 確認（例）
+swapon --show
+grep -nE '^[[:space:]]*[^#[:space:]].*[[:space:]]swap[[:space:]]' /etc/fstab || true
 ```
 
 合格条件（例）:
@@ -243,7 +247,7 @@ curl -sS -H 'Host: sample-app.local' http://<INGRESS_EXTERNAL_IP>/
 ```bash
 kubectl get nodes -o wide
 kubectl get pods -A
-kubectl get events -A --sort-by=.lastTimestamp | tail -n 50
+kubectl get events -A --sort-by=.metadata.creationTimestamp | tail -n 50
 
 # ノード側（Linux）
 sudo journalctl -u kubelet -n 200 --no-pager
