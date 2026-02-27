@@ -16,10 +16,11 @@
 
 ## 命名規則（推奨）
 
-- `chXX-<topic>-NN.png`
+- `chXX-<topic>-NN.<ext>`（`<ext>` は `png` または `webp`）
   - `XX`: 章番号（2桁）
   - `topic`: 英小文字の kebab-case（例: `pve-vm-list` / `kubectl-get-nodes`）
   - `NN`: 章内の並び順（2桁）
+  - 拡張子: 原則 PNG（`.png`）とし、必要に応じて WebP（`.webp`）も可とする
   - 例: `ch03-pve-cluster-01.png`
 
 ## 本文からの参照例
@@ -29,4 +30,3 @@ Jekyll の `relative_url` を使い、環境差分を吸収する。
 ```md
 ![Proxmox の VM 一覧（例: Proxmox VE 8.x）]({{ '/assets/images/screenshots/ch03-pve-vm-list-01.png' | relative_url }})
 ```
-
