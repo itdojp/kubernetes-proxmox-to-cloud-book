@@ -69,10 +69,9 @@ title: "Kubernetes: Proxmox検証からクラウド本番へ"
 
 ## ライセンス
 
-- 参照: https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/blob/main/LICENSE.md
+- 参照: [LICENSE.md](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/blob/main/LICENSE.md)
 - 概要: [ライセンスFAQ](introduction/license-faq/)
 
 ## フィードバック
 
-- Issues: https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/issues
-
+- Issues: [GitHub Issues](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/issues)

@@ -46,7 +46,7 @@ title: "本書の目的と前提"
 
 ## フィードバック窓口
 
-- Issues: https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/issues
+- Issues: [GitHub Issues](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/issues)
 
 ## まとめ
 
@@ -57,4 +57,3 @@ title: "本書の目的と前提"
 - [ ] 本書のスコープ/非スコープを理解した
 - [ ] 検証と本番で差分が出る領域（LB/Storage 等）を把握した
 - [ ] 破壊的操作の注意（影響範囲/バックアップ/停止線）を理解した
-
