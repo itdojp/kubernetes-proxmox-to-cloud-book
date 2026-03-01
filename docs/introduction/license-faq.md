@@ -19,7 +19,7 @@ title: "ライセンスFAQ"
 
 商用利用は別途ライセンス契約が必要です。詳細は `LICENSE.md` を参照し、問い合わせ窓口へ連絡してください。
 
-- LICENSE: https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/blob/main/LICENSE.md
+- LICENSE: [LICENSE.md](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/blob/main/LICENSE.md)
 - 問い合わせ: knowledge@itdo.jp
 
 ## Q. 引用して良いですか
@@ -35,4 +35,3 @@ title: "ライセンスFAQ"
 - [ ] 非営利利用と商用利用の違いを理解した
 - [ ] 参照すべきライセンス文書の場所を把握した
 - [ ] 不明点は問い合わせる方針を確認した
-
