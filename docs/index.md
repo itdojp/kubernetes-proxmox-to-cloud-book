@@ -7,7 +7,7 @@ title: "Kubernetes: Proxmox検証からクラウド本番へ"
 
 本書は、Proxmox 上の検証 Kubernetes から、クラウド上の本番 Kubernetes へ移行することを前提に、設計・手順・運用を整理する実務ガイドです。
 
-## 学習成果（3〜5）
+## 学習成果
 
 - 検証環境（Proxmox）と本番環境（クラウド）の責務分界を説明できる
 - 検証→本番で差分が出る箇所（LB/Storage/Identity/Observability 等）を前提に、作業の優先順位を設計できる
@@ -69,7 +69,9 @@ title: "Kubernetes: Proxmox検証からクラウド本番へ"
 
 ## ライセンス
 
-- 参照: [LICENSE.md](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/blob/main/LICENSE.md)
+本書は CC BY-NC-SA 4.0 で公開されています。商用利用は別途契約が必要です。
+
+- 詳細: [LICENSE.md](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/blob/main/LICENSE.md)
 - 概要: [ライセンスFAQ](introduction/license-faq/)
 
 ## フィードバック
