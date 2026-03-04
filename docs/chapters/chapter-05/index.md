@@ -114,7 +114,7 @@ kubectl -n ingress-nginx get svc ingress-nginx-controller
 検証観点（例）:
 
 - `ingress-nginx-controller` の Service に `EXTERNAL-IP` が付与される
-- `kubectl describe ing <ING>` で `ingressClassName` が意図どおりである
+- `kubectl -n <NS> describe ing <ING>` で `ingressClassName` が意図どおりである
 - `curl -H 'Host: ...'` で 200 が返る（Host/IngressClass の不整合を検出できる）
 
 検証のホスト名（例: `sample-app.local`）は、次のいずれかで解決できるようにします。

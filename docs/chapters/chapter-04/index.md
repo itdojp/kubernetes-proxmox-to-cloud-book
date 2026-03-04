@@ -50,7 +50,7 @@ sudo sysctl --system
 確認（例）:
 
 ```bash
-lsmod | egrep 'overlay|br_netfilter'
+lsmod | grep -E 'overlay|br_netfilter'
 sysctl net.ipv4.ip_forward
 ```
 
