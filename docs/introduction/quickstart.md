@@ -242,6 +242,13 @@ curl -sS -H 'Host: sample-app.local' http://<INGRESS_EXTERNAL_IP>/
 
 - `curl` が 200 を返し、本文が返る（`TEXT` の値が見える）
 
+## 落とし穴（頻出）
+
+- `kubectl get nodes` は CNI 導入前は `NotReady` が正常です（異常と誤認しない）。
+- `kubeadm join` の token は期限があります。失敗した場合は `kubeadm token create --print-join-command` で再生成します。
+- MetalLB の IP pool が DHCP/静的割り当てと衝突すると、原因の切り分けが難航します（IP 管理の責務を先に固定します）。
+- Ingress は Host と名前解決が揃わないと 404 になりやすいです（`curl -H 'Host: ...'` と `/etc/hosts` を先に疑う）。
+
 ## 失敗時に見る最小セット（切り分けの入口）
 
 ```bash
