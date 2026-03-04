@@ -105,8 +105,8 @@ images:
 
 ## 公式ドキュメント（参照）
 
-- Kustomize（公式）: https://kubectl.docs.kubernetes.io/references/kustomize/
-- Kubernetes: Secrets: https://kubernetes.io/docs/concepts/configuration/secret/
+- [Kustomize（公式）](https://kubectl.docs.kubernetes.io/references/kustomize/)
+- [Kubernetes: Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
 
 ## まとめ
 
