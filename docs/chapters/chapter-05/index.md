@@ -142,7 +142,7 @@ bash examples/k8s/addons/storage/local-path/set-default-storageclass.sh
 - [Calico（公式）](https://docs.tigera.io/calico/latest/)
 - [MetalLB（公式）](https://metallb.universe.tf/)
 - [ingress-nginx（公式）](https://kubernetes.github.io/ingress-nginx/)
-- [Kubernetes Blog: Ingress NGINX Retirement](https://www.kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)
+- [Kubernetes Blog: Ingress NGINX Retirement](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)
 - [Gateway API（公式）](https://gateway-api.sigs.k8s.io/)
 - [Kubernetes: Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 - [Kubernetes: Storage](https://kubernetes.io/docs/concepts/storage/)
