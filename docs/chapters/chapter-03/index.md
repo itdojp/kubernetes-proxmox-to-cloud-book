@@ -23,7 +23,7 @@ Proxmox/VM/ストレージの設定変更は破壊的操作を含む可能性が
 
 ## 検証用 と 本番用 の判断線（先に決める）
 
-検証環境は「壊して戻せる」ことが価値ですが、同時に「本番へ持ち込めない最適化」をすると移行で詰みます。
+検証環境は「壊して戻せる」ことが価値ですが、同時に「本番へ持ち込めない最適化」をすると、移行時に行き詰まります。
 本書では次を判断線にします。
 
 | 領域 | 検証（Proxmox）でやる | 本番（クラウド）で置き換える/やらない |
@@ -171,10 +171,10 @@ sudo vzdump 101 --mode snapshot --compress zstd
 
 ## 公式ドキュメント（参照）
 
-- Proxmox VE Documentation: https://pve.proxmox.com/pve-docs/
-- Proxmox Wiki（Cluster Manager / pvecm）: https://pve.proxmox.com/wiki/Cluster_Manager
-- Proxmox Wiki（Cloud-Init Support）: https://pve.proxmox.com/wiki/Cloud-Init_Support
-- Proxmox Wiki（Backup and Restore）: https://pve.proxmox.com/wiki/Backup_and_Restore
+- [Proxmox VE Documentation](https://pve.proxmox.com/pve-docs/)
+- [Proxmox Wiki（Cluster Manager / pvecm）](https://pve.proxmox.com/wiki/Cluster_Manager)
+- [Proxmox Wiki（Cloud-Init Support）](https://pve.proxmox.com/wiki/Cloud-Init_Support)
+- [Proxmox Wiki（Backup and Restore）](https://pve.proxmox.com/wiki/Backup_and_Restore)
 
 ## まとめ
 

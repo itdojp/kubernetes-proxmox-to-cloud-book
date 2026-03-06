@@ -89,7 +89,7 @@ kubectl apply -f examples/k8s/addons/metallb/l2advertisement.yaml
 ## Ingress（ingress-nginx と DNS/Host 設計）
 
 アプリを `Ingress` で公開するために、Ingress Controller を導入します。
-本書では例として ingress-nginx を使いますが、**ingress-nginx は Retirement（段階的終了）** が告知されています（執筆時点の best-effort メンテナンスは 2026年3月まで。最新状況は要確認）。
+本書では例として ingress-nginx を使いますが、**ingress-nginx は Retirement（段階的終了）** が告知されています（詳細は公式告知を参照してください）。
 そのため、ここでの ingress-nginx は **検証の例示** と位置づけ、本番では組織標準/クラウド標準へ置き換える前提で読み進めてください。
 
 本番の選定観点（例）:
