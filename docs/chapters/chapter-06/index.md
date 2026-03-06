@@ -90,11 +90,11 @@ curl -sS -H 'Host: sample-app.local' http://<INGRESS_EXTERNAL_IP>/
 
 ## 公式ドキュメント（参照）
 
-- Kubernetes: Deployments: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
-- Kubernetes: Service: https://kubernetes.io/docs/concepts/services-networking/service/
-- Kubernetes: Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
-- Kubernetes: ConfigMap: https://kubernetes.io/docs/concepts/configuration/configmap/
-- Kubernetes: Probes（readiness/liveness）: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+- [Kubernetes: Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+- [Kubernetes: Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+- [Kubernetes: Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [Kubernetes: ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/)
+- [Kubernetes: Probes（readiness/liveness）](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
 
 ## まとめ
 

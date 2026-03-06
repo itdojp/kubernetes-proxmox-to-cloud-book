@@ -12,7 +12,7 @@ title: "更新履歴とメンテ方針"
 
 ## 更新履歴
 
-- `CHANGELOG.md` を参照してください: https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/blob/main/CHANGELOG.md
+- [CHANGELOG.md](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/blob/main/CHANGELOG.md) を参照してください
 
 ## メンテ方針（ドラフト）
 
@@ -28,4 +28,3 @@ title: "更新履歴とメンテ方針"
 
 - [ ] CHANGELOG の参照先を把握した
 - [ ] 更新の優先順位（安全性/再現性）を理解した
-

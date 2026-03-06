@@ -75,8 +75,8 @@ kubectl kustomize examples/apps/sample-app/kustomize/overlays/cloud-prod | less
 
 ## 公式ドキュメント（参照）
 
-- Kustomize（公式）: https://kubectl.docs.kubernetes.io/references/kustomize/
-- kubectl apply -k: https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/
+- [Kustomize（公式）](https://kubectl.docs.kubernetes.io/references/kustomize/)
+- [kubectl apply -k](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/)
 
 ## まとめ
 

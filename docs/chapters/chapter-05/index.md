@@ -79,7 +79,7 @@ kubectl apply -f examples/k8s/addons/metallb/l2advertisement.yaml
 ## Ingress（ingress-nginx と DNS/Host 設計）
 
 アプリを `Ingress` で公開するために、Ingress Controller を導入します。
-本書では例として ingress-nginx を使いますが、**ingress-nginx は Retirement（段階的終了）** が告知されています（best-effort メンテナンスは 2026年3月まで）。
+本書では例として ingress-nginx を使いますが、**ingress-nginx は Retirement（段階的終了）** が告知されています（詳細は公式告知を参照してください）。
 そのため、ここでの ingress-nginx は **検証の例示** と位置づけ、本番では組織標準/クラウド標準へ置き換える前提で読み進めてください。
 
 本番の選定観点（例）:
@@ -138,14 +138,14 @@ bash examples/k8s/addons/storage/local-path/set-default-storageclass.sh
 
 ## 公式ドキュメント（参照）
 
-- Kubernetes: Cluster Networking (CNI): https://kubernetes.io/docs/concepts/cluster-administration/networking/
-- Calico（公式）: https://docs.tigera.io/calico/latest/
-- MetalLB（公式）: https://metallb.universe.tf/
-- ingress-nginx（公式）: https://kubernetes.github.io/ingress-nginx/
-- Kubernetes Blog: Ingress NGINX Retirement: https://www.kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/
-- Gateway API（公式）: https://gateway-api.sigs.k8s.io/
-- Kubernetes: Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
-- Kubernetes: Storage: https://kubernetes.io/docs/concepts/storage/
+- [Kubernetes: Cluster Networking (CNI)](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
+- [Calico（公式）](https://docs.tigera.io/calico/latest/)
+- [MetalLB（公式）](https://metallb.universe.tf/)
+- [ingress-nginx（公式）](https://kubernetes.github.io/ingress-nginx/)
+- [Kubernetes Blog: Ingress NGINX Retirement](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)
+- [Gateway API（公式）](https://gateway-api.sigs.k8s.io/)
+- [Kubernetes: Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [Kubernetes: Storage](https://kubernetes.io/docs/concepts/storage/)
 
 ## まとめ
 

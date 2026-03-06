@@ -74,9 +74,9 @@ kubectl apply -f examples/gitops/argocd/sample-app-application.yaml
 
 ## 公式ドキュメント（参照）
 
-- Argo CD（公式）: https://argo-cd.readthedocs.io/
-- Flux（公式）: https://fluxcd.io/
-- GitOps（概念）: https://opengitops.dev/
+- [Argo CD（公式）](https://argo-cd.readthedocs.io/)
+- [Flux（公式）](https://fluxcd.io/)
+- [GitOps（概念）](https://opengitops.dev/)
 
 ## まとめ
 

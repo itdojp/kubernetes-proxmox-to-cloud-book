@@ -63,7 +63,7 @@ Kubernetes リソースは Git を単一のソースにし、差分は Pull Requ
 ### やらないこと
 
 - 検証の都合で、本番の特定機能へ過度に依存する（後で差し替え不能になる）
-- 手順をスクリプト化して「理由が読めない黒魔術」にする
+- 手順をスクリプト化して、判断基準や前提が読めない状態にする（属人化・監査不能につながる）
 
 ## 図1：検証→本番の昇格（promotion）モデル（概念）
 
@@ -93,10 +93,10 @@ flowchart TB
 
 ## 公式ドキュメント（参照）
 
-- Kustomize（公式）: https://kubectl.docs.kubernetes.io/references/kustomize/
-- Helm（公式）: https://helm.sh/docs/
-- Argo CD（GitOps例）: https://argo-cd.readthedocs.io/
-- Flux（GitOps例）: https://fluxcd.io/
+- [Kustomize（公式）](https://kubectl.docs.kubernetes.io/references/kustomize/)
+- [Helm（公式）](https://helm.sh/docs/)
+- [Argo CD（GitOps例）](https://argo-cd.readthedocs.io/)
+- [Flux（GitOps例）](https://fluxcd.io/)
 
 ## まとめ
 

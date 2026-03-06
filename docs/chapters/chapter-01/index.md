@@ -121,11 +121,11 @@ flowchart TB
 
 ## 公式ドキュメント（参照）
 
-- Kubernetes: Container Runtimes（CRI/ランタイム）: https://kubernetes.io/docs/setup/production-environment/container-runtimes/
-- Kubernetes Blog: dockershim removal FAQ: https://kubernetes.io/blog/2022/02/17/dockershim-faq/
-- OCI（仕様）: https://opencontainers.org/
-- containerd（公式）: https://containerd.io/
-- Podman（公式）: https://podman.io/
+- [Kubernetes: Container Runtimes（CRI/ランタイム）](https://kubernetes.io/docs/setup/production-environment/container-runtimes/)
+- [Kubernetes Blog: dockershim removal FAQ](https://kubernetes.io/blog/2022/02/17/dockershim-faq/)
+- [OCI（仕様）](https://opencontainers.org/)
+- [containerd（公式）](https://containerd.io/)
+- [Podman（公式）](https://podman.io/)
 
 ## まとめ
 

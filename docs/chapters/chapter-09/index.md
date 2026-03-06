@@ -69,8 +69,8 @@ helm rollback sample-app 1 -n sample-app
 
 ## 公式ドキュメント（参照）
 
-- Helm（公式）: https://helm.sh/docs/
-- Helm: Chart Template Guide: https://helm.sh/docs/chart_template_guide/
+- [Helm（公式）](https://helm.sh/docs/)
+- [Helm: Chart Template Guide](https://helm.sh/docs/chart_template_guide/)
 
 ## まとめ
 
