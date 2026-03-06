@@ -138,7 +138,7 @@ grep -nE '^[[:space:]]*[^#[:space:]].*[[:space:]]swap[[:space:]]' /etc/fstab || 
 
 合格条件（例）:
 
-- `lsmod | egrep 'overlay|br_netfilter'` で有効
+- `lsmod | grep -E 'overlay|br_netfilter'` で有効
 - `sysctl net.ipv4.ip_forward` が `1`
 
 ### Step 5. containerd + kubeadm（control-plane → worker）
