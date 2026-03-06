@@ -13,7 +13,7 @@ title: "第6章：サンプルアプリ（raw YAML）で基本動作確認"
 
 ## 前提
 
-- Kubernetes クラスタが Ready（第4章）
+- Kubernetesクラスタが Ready（第4章）
 - CNI/Ingress が導入済み（Ingress を使う場合。第5章）
 - 本章で使うマニフェストは `examples/apps/sample-app/raw-yaml/` と一致させます
 

@@ -47,11 +47,25 @@ sudo cp examples/k8s/bootstrap/sysctl-k8s.conf /etc/sysctl.d/99-k8s.conf
 sudo sysctl --system
 ```
 
+確認（例）:
+
+```bash
+lsmod | grep -E 'overlay|br_netfilter'
+sysctl net.ipv4.ip_forward
+```
+
 swap 無効化（破壊的操作）:
 
 ```bash
 sudo swapoff -a
 sudo sed -i.bak '/^[[:space:]]*[^#[:space:]].*[[:space:]]swap[[:space:]]/ s/^/#/' /etc/fstab
+```
+
+確認（例）:
+
+```bash
+swapon --show
+grep -nE '^[[:space:]]*[^#[:space:]].*[[:space:]]swap[[:space:]]' /etc/fstab || true
 ```
 
 ## containerd インストールと設定（共通）
@@ -73,6 +87,13 @@ sudo sed -i.bak 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/
 sudo systemctl restart containerd
 ```
 
+確認（例）:
+
+```bash
+systemctl is-active containerd
+grep -n 'SystemdCgroup = true' /etc/containerd/config.toml
+```
+
 注記:
 
 - containerd の詳細は Kubernetes の container runtime 公式ドキュメントに従ってください（後述リンク参照）
@@ -82,6 +103,7 @@ sudo systemctl restart containerd
 
 Kubernetes のパッケージ配布/リポジトリは更新されるため、必ず公式ドキュメントを参照してください。
 本書では例として `pkgs.k8s.io` 系を前提にします。
+バージョンの前提は [検証済みバージョン一覧（Version Matrix）](../../appendices/version-matrix/) を参照してください。
 
 ```bash
 sudo apt-get update
@@ -96,6 +118,13 @@ echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
+```
+
+確認（例）:
+
+```bash
+kubeadm version
+kubectl version --client
 ```
 
 ## kubeadm init（control-plane で実行）
@@ -119,6 +148,10 @@ sudo chown "$(id -u)":"$(id -g)" "$HOME/.kube/config"
 ```
 
 ここで CNI を入れるまで、Node は `NotReady` のままです（第5章へ続きます）。
+
+落とし穴（例）:
+
+- `kubeadm-init.yaml` の `podSubnet` と、CNI（例: Calico）の設定が不整合だと、CNI 導入後も `NotReady` のままになることがあります。`kubeadm init` 前に「Pod CIDR をどこで定義しているか」を固定してください。
 
 ## kubeadm join（worker で実行）
 

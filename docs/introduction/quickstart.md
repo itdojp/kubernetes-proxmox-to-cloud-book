@@ -18,6 +18,31 @@ Quickstart は「詳細な最適化」よりも「最短での成功体験」を
 - 目的: サンプルアプリをデプロイして到達確認する
 - 次段階: 第3章以降で、ネットワーク/ストレージ/運用設計を詰める
 
+## 目的別の構成例（最小）
+
+本書は「Proxmox で検証し、クラウドで本番運用する」前提です。ここでは、目的別に “どこまで作るか” の最小例を示します（要件により調整してください）。
+
+### A. 成功体験（検証ラボ）
+
+- 目的: Kubernetes の基本要素（CNI/LB/Ingress/Storage）を一度動かす
+- 構成例: Proxmox 3ノード + VM 3台（control-plane 1 + worker 2）、Calico、MetalLB（L2）、ingress-nginx（例示）、local-path
+- 到達条件: サンプルアプリへ `curl` で到達できる
+
+### B. 運用練習（障害対応まで）
+
+- 追加するもの（例）: 監視/ログの最小導入、バックアップと復元の演習、アップグレードの演習
+- 到達条件: 「意図的に壊す→検知→一次切り分け→復旧」を 1 回通せる（第12章）
+
+### C. クラウド移行前提（差分を小さくする）
+
+- 追加するもの（例）: GitOps 導入、overlay/values による環境差分の固定（第8章/第11章）
+- 置き換える前提: LB/Ingress/Storage/Identity は本番でクラウド標準へ置換（第5章）
+- 到達条件: 検証と本番で「同一にできるもの/置換するもの」を説明でき、PR で差分をレビューできる
+
+注記:
+
+- 移行計画の判断例は第2章に、切替時の最小チェックリストは付録（トラブルシューティング）に記載します。
+
 ## 最短ルート（概要）
 
 1. Proxmox に 3 ノード（VM）を用意する（第3章）
@@ -113,7 +138,7 @@ grep -nE '^[[:space:]]*[^#[:space:]].*[[:space:]]swap[[:space:]]' /etc/fstab || 
 
 合格条件（例）:
 
-- `lsmod | egrep 'overlay|br_netfilter'` で有効
+- `lsmod | grep -E 'overlay|br_netfilter'` で有効
 - `sysctl net.ipv4.ip_forward` が `1`
 
 ### Step 5. containerd + kubeadm（control-plane → worker）
@@ -241,6 +266,13 @@ curl -sS -H 'Host: sample-app.local' http://<INGRESS_EXTERNAL_IP>/
 合格条件（例）:
 
 - `curl` が 200 を返し、本文が返る（`TEXT` の値が見える）
+
+## 落とし穴（頻出）
+
+- `kubectl get nodes` は CNI 導入前は `NotReady` が正常です（異常と誤認しない）。
+- `kubeadm join` の token は期限があります。失敗した場合は `kubeadm token create --print-join-command` で再生成します。
+- MetalLB の IP pool が DHCP/静的割り当てと衝突すると、原因の切り分けが難航します（IP 管理の責務を先に固定します）。
+- Ingress は Host と名前解決が揃わないと 404 になりやすいです（`curl -H 'Host: ...'` と `/etc/hosts` を先に疑う）。
 
 ## 失敗時に見る最小セット（切り分けの入口）
 

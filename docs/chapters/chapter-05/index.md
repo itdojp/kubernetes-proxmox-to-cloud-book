@@ -56,6 +56,11 @@ kubectl get pods -A
 kubectl get nodes
 ```
 
+検証観点（例）:
+
+- `kubectl get nodes` が全ノード `Ready` になる
+- `kube-system` の CNI 関連 Pod が `Running` になる（CrashLoop がない）
+
 ## MetalLB（検証環境での LB の位置づけ）
 
 クラウドでは `Service type=LoadBalancer` はクラウド LB が実体になりますが、検証環境（Proxmox）では自前で用意する必要があります。
@@ -75,6 +80,11 @@ kubectl apply -f examples/k8s/addons/metallb/l2advertisement.yaml
 
 - `examples/k8s/addons/metallb/ipaddresspool.yaml` のアドレスレンジは、VM ネットワーク（第3章）の空き帯域へ必ず合わせてください
 - 既存の DHCP/静的割り当てと衝突すると、切り分けが困難になります（IP 管理の責務を明確化します）
+
+検証観点（例）:
+
+- `Service type=LoadBalancer` に `EXTERNAL-IP` が払い出される（`kubectl get svc -A`）
+- 払い出された IP が “どのレンジから来たか” を追跡できる（`IPAddressPool` と一致する）
 
 ## Ingress（ingress-nginx と DNS/Host 設計）
 
@@ -100,6 +110,12 @@ bash examples/k8s/addons/ingress-nginx/install.sh
 ```bash
 kubectl -n ingress-nginx get svc ingress-nginx-controller
 ```
+
+検証観点（例）:
+
+- `ingress-nginx-controller` の Service に `EXTERNAL-IP` が付与される
+- `kubectl -n <NS> describe ing <ING>` で `ingressClassName` が意図どおりである
+- `curl -H 'Host: ...'` で 200 が返る（Host/IngressClass の不整合を検出できる）
 
 検証のホスト名（例: `sample-app.local`）は、次のいずれかで解決できるようにします。
 
@@ -127,6 +143,11 @@ bash examples/k8s/addons/storage/local-path/install.sh
 bash examples/k8s/addons/storage/local-path/set-default-storageclass.sh
 ```
 
+落とし穴（例）:
+
+- local-path は “特定ノードに紐づく” 前提が残ります。Pod のスケジュール先が変わると、期待したデータが見えない/壊れる可能性があります（本番の要件と不整合になりやすい）。
+- 検証では「PVC が確保されること」だけでなく「ノード障害/再スケジュール時にどうなるか」を意識しておくと、本番移行時の手戻りが減ります。
+
 ## “クラウド本番では置き換える箇所” の整理
 
 | 領域 | 検証（Proxmox） | 本番（クラウド） |
@@ -138,14 +159,14 @@ bash examples/k8s/addons/storage/local-path/set-default-storageclass.sh
 
 ## 公式ドキュメント（参照）
 
-- [Kubernetes: Cluster Networking (CNI)](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
-- [Calico（公式）](https://docs.tigera.io/calico/latest/)
-- [MetalLB（公式）](https://metallb.universe.tf/)
-- [ingress-nginx（公式）](https://kubernetes.github.io/ingress-nginx/)
-- [Kubernetes Blog: Ingress NGINX Retirement](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)
-- [Gateway API（公式）](https://gateway-api.sigs.k8s.io/)
-- [Kubernetes: Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
-- [Kubernetes: Storage](https://kubernetes.io/docs/concepts/storage/)
+- Kubernetes: Cluster Networking (CNI): https://kubernetes.io/docs/concepts/cluster-administration/networking/
+- Calico（公式）: https://docs.tigera.io/calico/latest/
+- MetalLB（公式）: https://metallb.universe.tf/
+- ingress-nginx（公式）: https://kubernetes.github.io/ingress-nginx/
+- Kubernetes Blog: Ingress NGINX Retirement: https://www.kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/
+- Gateway API（公式）: https://gateway-api.sigs.k8s.io/
+- Kubernetes: Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
+- Kubernetes: Storage: https://kubernetes.io/docs/concepts/storage/
 
 ## まとめ
 
