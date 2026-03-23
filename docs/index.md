@@ -35,6 +35,7 @@ title: "Kubernetes: Proxmox検証からクラウド本番へ"
 
 - まず全体像を掴む: 第1章 → 第2章
 - 早く成功体験が必要: [Quickstart（最短で成功体験）](introduction/quickstart/)
+- まず正常系の確認項目を固定したい: [付録：スモークテストと完了チェックリスト](appendices/smoke-test-checklist/)
 - 検証→本番の差分を整理したい: 第2章 → 第11章 → 第12章
 - マニフェスト運用（Kustomize/Helm）が主目的: 第6章 → 第7章 → 第8章 → 第9章 → 第10章
 
@@ -59,6 +60,7 @@ title: "Kubernetes: Proxmox検証からクラウド本番へ"
   - [第11章：GitOps/CI/CD（検証→本番の流れ）](chapters/chapter-11/)
   - [第12章：本番運用（監視/ログ/セキュリティ/バックアップ/アップグレード）](chapters/chapter-12/)
 - 付録
+  - [スモークテストと完了チェックリスト](appendices/smoke-test-checklist/)
   - [検証済みバージョン一覧（Version Matrix）](appendices/version-matrix/)
   - [トラブルシューティング](appendices/troubleshooting/)
   - [用語集](appendices/glossary/)

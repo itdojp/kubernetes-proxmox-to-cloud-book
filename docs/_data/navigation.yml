@@ -36,6 +36,8 @@ chapters:
     path: "/chapters/chapter-12/"
 
 appendices:
+  - title: "付録：スモークテストと完了チェックリスト"
+    path: "/appendices/smoke-test-checklist/"
   - title: "付録：検証済みバージョン一覧（Version Matrix）"
     path: "/appendices/version-matrix/"
   - title: "付録：トラブルシューティング"
@@ -50,4 +52,3 @@ afterword:
     path: "/afterword/"
   - title: "奥付"
     path: "/afterword/colophon/"
-

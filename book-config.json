@@ -113,6 +113,12 @@
     ],
     "appendices": [
       {
+        "id": "smoke-test-checklist",
+        "title": "付録：スモークテストと完了チェックリスト",
+        "path": "/appendices/smoke-test-checklist/",
+        "description": "Quickstart 完了後と切替前後の最低限の正常系確認"
+      },
+      {
         "id": "version-matrix",
         "title": "付録：検証済みバージョン一覧（Version Matrix）",
         "path": "/appendices/version-matrix/",
@@ -166,4 +172,3 @@
     }
   }
 }
-
