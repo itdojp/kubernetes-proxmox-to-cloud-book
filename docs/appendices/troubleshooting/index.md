@@ -33,6 +33,11 @@ sudo journalctl -u kubelet -n 200 --no-pager
 sudo systemctl status containerd --no-pager
 ```
 
+## 正常系の基準を先に固定する
+
+- Quickstart 完了後や切替前後の smoke test は [付録：スモークテストと完了チェックリスト](../smoke-test-checklist/) を参照してください。
+- 本付録は「壊れた後」の切り分けに専念し、正常系の完了判定とは分離します。
+
 ## 症状別：切り分け表（頻出）
 
 ### Kubernetes / kubeadm / Node
