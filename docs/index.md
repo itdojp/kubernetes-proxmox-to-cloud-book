@@ -39,6 +39,22 @@ title: "Kubernetes: Proxmox検証からクラウド本番へ"
 - 検証→本番の差分を整理したい: 第2章 → 第11章 → 第12章
 - マニフェスト運用（Kustomize/Helm）が主目的: 第6章 → 第7章 → 第8章 → 第9章 → 第10章
 
+Quickstart から入る場合は、次の 3 点だけ先に固定すると迷いにくくなります。
+
+- 開始条件: Proxmox 側で 3 ノード相当の検証ラボを用意し、本リポジトリの `examples/` を参照できる
+- 合格条件: sample-app に到達し、[付録：スモークテストと完了チェックリスト](appendices/smoke-test-checklist/) の最小確認を通せる
+- 戻り先: バージョン差は [Version Matrix](appendices/version-matrix/)、異常時の初動は [トラブルシューティング](appendices/troubleshooting/) を先に見る
+
+## 安全に使うための注意
+
+本書の手順は、検証環境から本番環境へ移るときの判断材料を整理するためのものであり、そのまま本番へ適用してよいことを保証するものではありません。特に次の点を先に確認してください。
+
+- Proxmox 側の検証では、VM の再作成、ストレージ再初期化、`kubeadm reset` 相当の操作がデータ損失や停止を招く
+- クラウド側では、Load Balancer、Block Storage、Identity、監視基盤の仕様差で手順や課金が変わる
+- 本番反映前には、etcd backup、マニフェストの差分確認、ロールバック手順、メンテナンス時間帯を先に固定する
+
+検証と本番の差分が気になった場合は、第2章と付録の Version Matrix / トラブルシューティングを先に確認してから本文へ戻ると判断しやすくなります。
+
 ## 目次
 
 - 導入
@@ -79,3 +95,13 @@ title: "Kubernetes: Proxmox検証からクラウド本番へ"
 ## フィードバック
 
 - Issues: [GitHub Issues](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/issues)
+
+## 利用と更新情報
+
+- 公開版: [GitHub Pages](https://itdojp.github.io/kubernetes-proxmox-to-cloud-book/)
+- リポジトリ: [GitHub Repository](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book)
+- 版差確認: [コミット履歴](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/commits/main/) / [Pull Requests](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/pulls)
+- バージョン前提: [付録：検証済みバージョン一覧（Version Matrix）](appendices/version-matrix/)
+- 更新方針: [付録：更新履歴とメンテ方針](appendices/update-notes/)
+
+Kubernetes、CNI、CSI、Ingress Controller、クラウド機能の前提は変化します。実運用に適用するときは、本書の記述だけで閉じず、利用中のディストリビューション、クラウド、アドオンの公式ドキュメント を必ず併読してください。
