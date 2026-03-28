@@ -104,4 +104,4 @@ Quickstart から入る場合は、次の 3 点だけ先に固定すると迷い
 - バージョン前提: [付録：検証済みバージョン一覧（Version Matrix）](appendices/version-matrix/)
 - 更新方針: [付録：更新履歴とメンテ方針](appendices/update-notes/)
 
-Kubernetes、CNI、CSI、Ingress Controller、クラウド機能の前提は変化します。実運用に適用するときは、本書の記述だけで閉じず、利用中のディストリビューション、クラウド、アドオンの公式 documentation を必ず併読してください。
+Kubernetes、CNI、CSI、Ingress Controller、クラウド機能の前提は変化します。実運用に適用するときは、本書の記述だけで閉じず、利用中のディストリビューション、クラウド、アドオンの公式ドキュメント を必ず併読してください。
