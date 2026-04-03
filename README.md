@@ -1,10 +1,12 @@
 # Kubernetes: Proxmox検証からクラウド本番へ（kubernetes-proxmox-to-cloud-book）
 
-本リポジトリは、Proxmox 上の検証 Kubernetes から、クラウド上の本番 Kubernetes へ移行するための設計・手順・運用を整理する書籍プロジェクトです。公開用サイトは `docs/` を GitHub Pages で配信します。
+本リポジトリは、Proxmox 上の検証 Kubernetes から、
+クラウド上の本番 Kubernetes へ移行するための設計・手順・運用を整理する書籍プロジェクトです。
+公開用サイトは `docs/` を GitHub Pages で配信します。
 
 ## 公開URL（GitHub Pages）
 
-- https://itdojp.github.io/kubernetes-proxmox-to-cloud-book/
+- [Kubernetes: Proxmox検証からクラウド本番へ](https://itdojp.github.io/kubernetes-proxmox-to-cloud-book/)
 
 ## 目次
 
@@ -13,7 +15,7 @@
 
 ## フィードバック
 
-- Issues: https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/issues
+- Issues: [itdojp/kubernetes-proxmox-to-cloud-book の Issues](https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/issues)
 
 ## ローカル開発（前提）
 
@@ -48,5 +50,5 @@ npm run dev:podman
 
 ## シリーズ情報
 
-- シリーズ: https://itdojp.github.io/it-engineer-knowledge-architecture/
-- 出版ガイド: https://itdojp.github.io/it-engineer-knowledge-architecture/docs/publishing/
+- シリーズ: [ITエンジニア知識体系](https://itdojp.github.io/it-engineer-knowledge-architecture/)
+- 出版ガイド: [公開中の出版ガイド](https://itdojp.github.io/it-engineer-knowledge-architecture/docs/publishing/)
