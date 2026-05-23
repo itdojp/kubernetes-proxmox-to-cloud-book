@@ -55,6 +55,16 @@ Quickstart から入る場合は、次の 3 点だけ先に固定すると迷い
 
 検証と本番の差分が気になった場合は、第2章と付録の Version Matrix / トラブルシューティングを先に確認してから本文へ戻ると判断しやすくなります。
 
+## 実務適用前の Proxmox→Cloud 移行レビューゲート
+
+本書の検証手順をクラウド本番へ昇格する前に、次の観点を必ず確認してください。
+
+- 2026-05-23（Asia/Tokyo）時点の公式情報では、Kubernetes は v1.36 系が最新で、サポート対象 minor は v1.36 / v1.35 / v1.34 です。本文の v1.35 例はまだサポート対象ですが、新規構築・移行計画では公式リリース情報と Version Skew Policy を再確認します。
+- Proxmox VE は検証基盤です。2026-05-23 時点では Proxmox VE 9.1 が利用可能であるため、手元の検証基盤との差分（VM snapshot、SDN、vTPM、ストレージ）を Version Matrix に記録します。
+- ingress-nginx は公式に Retirement が告知され、2026年3月以降は新規リリース、bugfix、security update が提供されない前提です。検証例として残す場合も、本番では Gateway API または維持されている Ingress Controller への移行計画を必須にします。
+- Proxmox 検証の MetalLB / local-path / kubeadm / ローカル認証を、クラウド本番の Load Balancer / CSI / Managed Kubernetes / IAM・SSO へどこで置き換えるかを、切替前チェックリストに落とし込みます。
+- バックアップ、DR、監視、ログ、Secret、証跡、費用、責任分界は「クラウドに移せば解決」ではありません。各 provider / 組織標準の責任範囲を確認し、復旧演習まで完了してから本番化します。
+
 ## 目次
 
 - 導入

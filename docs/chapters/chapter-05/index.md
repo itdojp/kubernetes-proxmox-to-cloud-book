@@ -89,8 +89,8 @@ kubectl apply -f examples/k8s/addons/metallb/l2advertisement.yaml
 ## Ingress（ingress-nginx と DNS/Host 設計）
 
 アプリを `Ingress` で公開するために、Ingress Controller を導入します。
-本書では例として ingress-nginx を使いますが、**ingress-nginx は Retirement（段階的終了）** が告知されています（詳細は公式告知を参照してください）。
-そのため、ここでの ingress-nginx は **検証の例示** と位置づけ、本番では組織標準/クラウド標準へ置き換える前提で読み進めてください。
+本書では例として ingress-nginx を使いますが、**ingress-nginx は Retirement（段階的終了）** が告知されています。公式告知では best-effort maintenance は 2026年3月までで、その後は新規リリース、bugfix、security update が提供されない前提です。
+そのため、ここでの ingress-nginx は **検証の例示** と位置づけ、本番では Gateway API または組織標準/クラウド標準の Ingress Controller へ置き換える前提で読み進めてください。
 
 本番の選定観点（例）:
 
@@ -98,6 +98,16 @@ kubectl apply -f examples/k8s/addons/metallb/l2advertisement.yaml
 - セキュリティ: CVE 対応の継続性、マルチテナント前提の安全性
 - 互換性: Gateway API 対応/移行方針（Ingress の将来性を含む）
 - 観測性: 組織標準の監視/ログ/トレースへ統合できるか
+
+
+本番昇格前の判定:
+
+| 判定項目 | 本番へ持ち込む条件 |
+| --- | --- |
+| Controller の保守状態 | upstream / vendor / provider の更新と security advisory を継続確認できる |
+| Gateway API / Ingress 方針 | 新規設計は Gateway API も候補に含め、既存 Ingress annotation 依存を棚卸しする |
+| TLS / DNS / LB | 証明書更新、DNS 切替、Cloud LB 課金、WAF/CDN 連携の責任者が明確である |
+| 退避策 | 切替失敗時に旧経路へ戻す条件、TTL、タイムアウト、担当者が Runbook 化されている |
 
 インストール例（Service type=LoadBalancer を前提）:
 
