@@ -67,16 +67,16 @@ title: "第12章：本番運用（監視/ログ/セキュリティ/バックア�
 - バックアップ: 「取得」だけでなく「復元」までを成功条件にし、RTO/RPO の現実性を点検する（復元先・停止線は要件依存）
 - アップグレード: `kubeadm upgrade plan`（または managed の標準手順）で差分を確認し、段階的更新の順序とロールバック条件を整理する
 
-## 本番昇格判定ゲート（Proxmox 検証から Cloud 本番へ）
+## 本番昇格判定ゲート（Proxmox 検証からクラウド本番へ）
 
 検証クラスタで「動いた」状態と、クラウド本番で「運用できる」状態は別物です。切替前レビューでは次を明文化します。
 
-| 領域 | Proxmox 検証で確認すること | Cloud 本番で確定すること |
+| 領域 | Proxmox 検証で確認すること | クラウド本番で確定すること |
 | --- | --- | --- |
 | Kubernetes version | kubeadm / kubelet / kubectl / アドオンの実バージョンを Version Matrix に記録する | Managed Kubernetes の supported version、upgrade window、Version Skew、provider 固有制約を確認する |
 | Ingress / Gateway | ingress-nginx 例で L7 経路と Host/TLS 設計を検証する | ingress-nginx retirement を踏まえ、Gateway API または維持される Controller を選定する |
-| Storage / Backup | local-path / NFS などで PVC と restore 手順を演習する | Cloud CSI、snapshot、backup service、RPO/RTO、cross-region / cross-zone 復旧を定義する |
-| Identity / Secret | kubeconfig / RBAC / Secret 展開の最小運用を確認する | IAM/SSO、監査ログ、Secret 管理、break-glass 手順を組織標準へ接続する |
+| Storage / Backup | local-path / NFS などで PVC と復元（リストア）手順を演習する | Cloud CSI、snapshot、backup service、RPO/RTO、cross-region / cross-zone 復旧を定義する |
+| Identity / Secret | kubeconfig / RBAC / Secret 展開の最小運用を確認する | IAM/SSO、監査ログ、Secret 管理、Break-glass（緊急時）手順を組織標準へ接続する |
 | Observability | Pod / Node / Ingress の最低限のメトリクスとログを見られる | SLO、通知、当番、ログ保持、費用、個人情報/機密情報の扱いを決める |
 | Cutover / Rollback | sample-app の切替と戻しを演習する | DNS TTL、LB 切替、データ同期、停止線、承認者、顧客影響連絡を Runbook 化する |
 
