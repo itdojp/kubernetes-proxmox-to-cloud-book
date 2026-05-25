@@ -1,6 +1,9 @@
 ---
 layout: book
 title: "Kubernetes: Proxmox検証からクラウド本番へ"
+description: "Proxmox上の検証Kubernetesからクラウド上の本番Kubernetesへ移行するための設計・手順・運用を、現実的な差分（LB/Storage/Identity/Observability等）を前提に整理する実務ガイド。"
+author: "ITDO Inc."
+version: "0.1.0"
 ---
 
 # Kubernetes: Proxmox検証からクラウド本番へ

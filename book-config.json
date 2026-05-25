@@ -170,5 +170,6 @@
       "legalNotice": true,
       "glossary": true
     }
-  }
+  },
+  "homepage": "https://itdojp.github.io/kubernetes-proxmox-to-cloud-book/"
 }
