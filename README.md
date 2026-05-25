@@ -35,6 +35,16 @@ npm run dev
 
 `npm run dev` は `http://127.0.0.1:4000/` で起動します（`--baseurl ''`）。
 
+## 品質確認
+
+`book-config.json` を正本として、npm パッケージ情報、Jekyll 設定、トップページの
+front matter、ナビゲーション、公開アセットの整合性を確認します。
+
+```bash
+npm run check:metadata
+npm test
+```
+
 ## ローカルビルド/プレビュー（Podman）
 
 ローカルに Ruby/Bundler がない場合は、Podman を利用できます。
