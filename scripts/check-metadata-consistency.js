@@ -33,10 +33,6 @@ function readJson(relPath) {
   return JSON.parse(readText(relPath));
 }
 
-function normalizeSlash(value) {
-  return String(value || '').replace(/\\/g, '/');
-}
-
 function isInside(base, target) {
   const rel = path.relative(base, target);
   return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
@@ -269,7 +265,7 @@ function resolveDocsPage(routePath, label) {
 function validateMetadata(config, pkg, docsConfig, indexFrontMatter, readme) {
   const repoSlug = canonicalRepoSlug(config.repository && config.repository.url);
   if (!repoSlug) {
-    addError('book-config.json repository.url must be a GitHub repository URL ending in .git.');
+    addError('book-config.json repository.url must be a GitHub repository URL.');
     return;
   }
   const repoName = repoSlug.split('/')[1];
@@ -315,10 +311,17 @@ function validateEntries(entries) {
 
   for (const entry of entries) {
     const label = `book-config.json structure.${entry.section}.${entry.id || '<missing-id>'}`;
-    if (!entry.id) addError(`${label} is missing id.`);
-    if (seenIds.has(entry.id)) addError(`${label} id is duplicated: ${entry.id}`);
-    seenIds.add(entry.id);
+    if (!entry.id) {
+      addError(`${label} is missing id.`);
+    } else {
+      if (seenIds.has(entry.id)) addError(`${label} id is duplicated: ${entry.id}`);
+      seenIds.add(entry.id);
+    }
 
+    if (!entry.path) {
+      addError(`${label}.path is missing.`);
+      continue;
+    }
     if (seenPaths.has(entry.path)) addError(`${label}.path is duplicated: ${entry.path}`);
     seenPaths.add(entry.path);
 
