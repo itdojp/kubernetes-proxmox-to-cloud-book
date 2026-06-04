@@ -30,7 +30,12 @@ function readText(relPath) {
 }
 
 function readJson(relPath) {
-  return JSON.parse(readText(relPath));
+  try {
+    return JSON.parse(readText(relPath));
+  } catch (err) {
+    addError(`${relPath} must be readable JSON: ${err.message}`);
+    return {};
+  }
 }
 
 function isInside(base, target) {
