@@ -262,7 +262,7 @@ function resolveDocsPage(routePath, label) {
   return null;
 }
 
-function validateMetadata(config, pkg, docsConfig, indexFrontMatter, readme) {
+function validateMetadata(config, pkg, lockRoot, docsConfig, indexFrontMatter, readme) {
   const repoSlug = canonicalRepoSlug(config.repository && config.repository.url);
   if (!repoSlug) {
     addError('book-config.json repository.url must be a GitHub repository URL.');
@@ -280,6 +280,10 @@ function validateMetadata(config, pkg, docsConfig, indexFrontMatter, readme) {
   assertEqual(pkg.repository && pkg.repository.url, config.repository.url, 'package.json repository.url');
   assertEqual(normalizeHomepage(pkg.homepage), config.homepage, 'package.json homepage');
   assertEqual(pkg.bugs && pkg.bugs.url, `https://github.com/${repoSlug}/issues`, 'package.json bugs.url');
+
+  assertEqual(lockRoot.name, pkg.name, 'package-lock root name');
+  assertEqual(lockRoot.version, pkg.version, 'package-lock root version');
+  assertEqual(lockRoot.license, pkg.license, 'package-lock root license');
 
   assertEqual(docsConfig.title, config.title, 'docs/_config.yml title');
   assertEqual(docsConfig.description, config.description, 'docs/_config.yml description');
@@ -382,13 +386,15 @@ function validateRequiredAssets() {
 function main() {
   const config = readJson('book-config.json');
   const pkg = readJson('package.json');
+  const lock = readJson('package-lock.json');
+  const lockRoot = lock.packages && lock.packages[''] ? lock.packages[''] : {};
   const docsConfig = parseTopLevelYaml(readText('docs/_config.yml'));
   const index = parseFrontMatter(readText('docs/index.md'), 'docs/index.md');
   const nav = parseNavigationYaml(readText('docs/_data/navigation.yml'));
   const readme = readText('README.md');
   const entries = collectEntries(config);
 
-  validateMetadata(config, pkg, docsConfig, index.data, readme);
+  validateMetadata(config, pkg, lockRoot, docsConfig, index.data, readme);
   validateEntries(entries);
   validateNavigation(config, nav);
   validateRequiredAssets();
