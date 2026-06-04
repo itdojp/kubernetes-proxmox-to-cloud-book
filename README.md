@@ -19,12 +19,14 @@
 
 ## ローカル開発（前提）
 
-- Node.js（`npm` 実行用）
+- Node.js 20+（`npm` 実行用。CI は Node.js 20 を使用）
 - Ruby + Bundler（Jekyll 実行用）
 
 ## ローカルビルド/プレビュー
 
 ```bash
+npm ci
+
 cd docs
 bundle install
 cd ..
@@ -41,6 +43,7 @@ npm run dev
 front matter、ナビゲーション、公開アセットの整合性を確認します。
 
 ```bash
+npm run check:security
 npm run check:metadata
 npm test
 ```
