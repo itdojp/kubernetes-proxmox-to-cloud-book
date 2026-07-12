@@ -166,7 +166,7 @@
       "checklistPack": true,
       "troubleshootingFlow": true,
       "conceptMap": false,
-      "figureIndex": true,
+      "figureIndex": false,
       "legalNotice": true,
       "glossary": true
     }
