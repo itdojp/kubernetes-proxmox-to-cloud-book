@@ -86,29 +86,17 @@ Kubernetes リソースは Git を単一のソースにし、差分は Pull Requ
 
 ## 図1：検証→本番の昇格（promotion）モデル（概念）
 
-```mermaid
-flowchart LR
-  Dev[作業者] --> PR[Pull Request]
-  PR --> Review[レビュー/承認]
-  Review --> Main[main へ反映]
-
-  Main --> CI[CI: lint/build/link-check]
-  CI --> Lab[検証クラスタ（Proxmox）へ反映]
-  Lab --> Verify[動作確認/観測/手順更新]
-  Verify --> Promote[本番向け差分を適用]
-  Promote --> Prod[本番クラスタ（クラウド）へ反映]
-```
+<figure id="figure-03-promotion-model">
+  <img src="../../assets/images/figures/03-promotion-model.svg" alt="作業者がPull Requestを作成し、レビューと承認、main反映、CI、Proxmox検証クラスタへの反映、動作確認と観測、手順更新を経て、本番向け差分を適用しクラウド本番クラスタへ反映する昇格フロー。">
+  <figcaption>図3：検証→本番の昇格（promotion）モデル（概念）。<a href="../../appendices/figure-index/#figure-03-promotion-model">目的と確認観点は図表索引を参照</a>。</figcaption>
+</figure>
 
 ## 図2：差分吸収（base + overlays / values）（概念）
 
-```mermaid
-flowchart TB
-  Base[共通: base] --> Dev[検証: overlay/dev]
-  Base --> Prod[本番: overlay/prod]
-
-  ValuesBase[共通: values] --> ValuesDev[検証: values-dev]
-  ValuesBase --> ValuesProd[本番: values-prod]
-```
+<figure id="figure-04-configuration-differences">
+  <img src="../../assets/images/figures/04-configuration-differences.svg" alt="共通のKustomize baseから検証用overlayと本番用overlayを派生させ、共通のHelm valuesから検証用valuesと本番用valuesを派生させる。共通化と環境差分の分離を示す図。">
+  <figcaption>図4：差分吸収（base + overlays / values）（概念）。<a href="../../appendices/figure-index/#figure-04-configuration-differences">目的と確認観点は図表索引を参照</a>。</figcaption>
+</figure>
 
 ## 公式ドキュメント（参照）
 

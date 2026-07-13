@@ -21,6 +21,40 @@ const repoRoot = findRepoRoot(process.cwd());
 const repoRootReal = fs.realpathSync(repoRoot);
 const errors = [];
 
+const FIGURE_INDEX_ROUTE = '/appendices/figure-index/';
+const FIGURE_INVENTORY = [
+  {
+    chapterRoute: '/chapters/chapter-01/',
+    anchor: 'figure-01-responsibility-flow',
+    title: '図1：責務とデータフロー（概念）',
+    asset: 'docs/assets/images/figures/01-responsibility-flow.svg',
+  },
+  {
+    chapterRoute: '/chapters/chapter-01/',
+    anchor: 'figure-02-lab-production-comparison',
+    title: '図2：アーキテクチャ比較（検証 vs 本番）',
+    asset: 'docs/assets/images/figures/02-lab-production-comparison.svg',
+  },
+  {
+    chapterRoute: '/chapters/chapter-02/',
+    anchor: 'figure-03-promotion-model',
+    title: '図3：検証→本番の昇格（promotion）モデル（概念）',
+    asset: 'docs/assets/images/figures/03-promotion-model.svg',
+  },
+  {
+    chapterRoute: '/chapters/chapter-02/',
+    anchor: 'figure-04-configuration-differences',
+    title: '図4：差分吸収（base + overlays / values）（概念）',
+    asset: 'docs/assets/images/figures/04-configuration-differences.svg',
+  },
+  {
+    chapterRoute: '/chapters/chapter-03/',
+    anchor: 'figure-05-lab-layers',
+    title: '図5：検証環境のレイヤ（概念）',
+    asset: 'docs/assets/images/figures/05-lab-layers.svg',
+  },
+];
+
 function addError(message) {
   errors.push(message);
 }
@@ -388,6 +422,98 @@ function validateRequiredAssets() {
   }
 }
 
+function validateFigureIndex(config, entries, nav, indexBody) {
+  const modules = config.ux && config.ux.modules;
+  if (!modules || modules.figureIndex !== true) {
+    addError('book-config.json ux.modules.figureIndex must be true when the figure index is published.');
+  }
+
+  const configuredFigures = entries.filter((entry) => entry.id === 'figure-index');
+  assertEqual(configuredFigures.length, 1, 'book-config.json figure-index configured item count');
+  if (configuredFigures.length === 1) {
+    assertEqual(configuredFigures[0].path, FIGURE_INDEX_ROUTE, 'book-config.json figure-index route');
+    assertEqual(configuredFigures[0].title, '付録：図表索引', 'book-config.json figure-index title');
+  }
+
+  const appendixNav = nav.appendices || [];
+  const navFigureIndex = appendixNav.filter((item) => item.path === FIGURE_INDEX_ROUTE);
+  assertEqual(navFigureIndex.length, 1, 'docs/_data/navigation.yml figure-index item count');
+  if (navFigureIndex.length === 1) {
+    assertEqual(navFigureIndex[0].title, '付録：図表索引', 'docs/_data/navigation.yml figure-index title');
+  }
+
+  assertContains(indexBody, '(appendices/figure-index/)', 'docs/index.md figure-index top link');
+  const figureIndexAbs = resolveDocsPage(FIGURE_INDEX_ROUTE, 'figure index route');
+  if (!figureIndexAbs) return;
+  const figureIndexRel = path.relative(repoRoot, figureIndexAbs);
+  const figureIndex = parseFrontMatter(fs.readFileSync(figureIndexAbs, 'utf8'), figureIndexRel);
+  assertEqual(figureIndex.data.layout, 'book', `${figureIndexRel} front matter layout`);
+  assertEqual(figureIndex.data.title, '図表索引', `${figureIndexRel} front matter title`);
+  assertContains(figureIndex.body, '# 図表索引', `${figureIndexRel} heading`);
+  if (/(screenshot|favicon)/i.test(figureIndex.body)) {
+    addError(`${figureIndexRel} must not list screenshots, planned images, or favicon assets.`);
+  }
+
+  const expectedAnchors = FIGURE_INVENTORY.map((figure) => figure.anchor);
+  const indexFigureLinks = Array.from(figureIndex.body.matchAll(/\]\([^)]*#(figure-\d{2}-[a-z0-9-]+)\)/g), (match) => match[1]);
+  const indexStableAnchors = Array.from(figureIndex.body.matchAll(/\{:\s*#(figure-\d{2}-[a-z0-9-]+)\s*\}/g), (match) => match[1]);
+  assertEqual(indexFigureLinks.length, FIGURE_INVENTORY.length, `${figureIndexRel} exact figure link count`);
+  assertEqual(JSON.stringify(indexFigureLinks), JSON.stringify(expectedAnchors), `${figureIndexRel} figure link order`);
+  assertEqual(new Set(indexFigureLinks).size, FIGURE_INVENTORY.length, `${figureIndexRel} figure links must be one-to-one`);
+  assertEqual(JSON.stringify(indexStableAnchors), JSON.stringify(expectedAnchors), `${figureIndexRel} stable index anchor order`);
+
+  const chapterBodies = new Map();
+  const staticSvgRefs = [];
+  let figureAnchorCount = 0;
+  for (const figure of FIGURE_INVENTORY) {
+    if (!chapterBodies.has(figure.chapterRoute)) {
+      const chapterAbs = resolveDocsPage(figure.chapterRoute, `figure inventory ${figure.chapterRoute}`);
+      if (!chapterAbs) continue;
+      chapterBodies.set(figure.chapterRoute, {
+        relPath: path.relative(repoRoot, chapterAbs),
+        body: parseFrontMatter(fs.readFileSync(chapterAbs, 'utf8'), path.relative(repoRoot, chapterAbs)).body,
+      });
+    }
+    const chapter = chapterBodies.get(figure.chapterRoute);
+    if (!chapter) continue;
+    const assetFromChapter = figure.asset.replace(/^docs\//, '../../');
+    assertContains(chapter.body, `<figure id="${figure.anchor}">`, `${chapter.relPath} stable figure anchor`);
+    assertContains(chapter.body, `<img src="${assetFromChapter}"`, `${chapter.relPath} static SVG reference`);
+    assertContains(chapter.body, `<figcaption>${figure.title}`, `${chapter.relPath} figure caption`);
+    assertContains(figureIndex.body, `#${figure.anchor}`, `${figureIndexRel} figure anchor reference`);
+    assertContains(figureIndex.body, figure.title, `${figureIndexRel} figure title`);
+
+    const svgAbs = resolveRepoPath(figure.asset, `figure inventory asset ${figure.asset}`, { mustExist: true, file: true });
+    if (svgAbs) {
+      const svg = fs.readFileSync(svgAbs, 'utf8');
+      assertContains(svg, '<svg', `${figure.asset} SVG root`);
+      assertContains(svg, 'role="img"', `${figure.asset} accessible role`);
+      assertContains(svg, '<title', `${figure.asset} meaningful title`);
+      assertContains(svg, '<desc', `${figure.asset} meaningful description`);
+      if (/<script\b|<foreignObject\b|(?:href|xlink:href)=["']https?:\/\//i.test(svg)) {
+        addError(`${figure.asset} must be a self-contained static SVG without scripts or external runtime dependencies.`);
+      }
+    }
+  }
+
+  for (const chapter of chapterBodies.values()) {
+    if (/```mermaid/i.test(chapter.body)) {
+      addError(`${chapter.relPath} must not retain Mermaid runtime diagrams after static SVG conversion.`);
+    }
+    figureAnchorCount += (chapter.body.match(/<figure id="figure-\d{2}-[a-z0-9-]+">/g) || []).length;
+    staticSvgRefs.push(...Array.from(chapter.body.matchAll(/<img src="(\.\.\/\.\.\/assets\/images\/figures\/[^"]+\.svg)"/g), (match) => match[1]));
+  }
+  assertEqual(figureAnchorCount, FIGURE_INVENTORY.length, 'chapter exact static figure inventory count');
+  assertEqual(JSON.stringify(staticSvgRefs), JSON.stringify(FIGURE_INVENTORY.map((figure) => figure.asset.replace(/^docs\//, '../../'))), 'chapter static SVG inventory order');
+
+  const figureDir = resolveRepoPath('docs/assets/images/figures', 'static figure asset directory', { mustExist: true });
+  if (figureDir) {
+    const actualAssets = fs.readdirSync(figureDir).filter((name) => name.endsWith('.svg')).sort();
+    const expectedAssets = FIGURE_INVENTORY.map((figure) => path.basename(figure.asset)).sort();
+    assertEqual(JSON.stringify(actualAssets), JSON.stringify(expectedAssets), 'static SVG asset inventory');
+  }
+}
+
 function main() {
   const config = readJson('book-config.json');
   const pkg = readJson('package.json');
@@ -403,6 +529,7 @@ function main() {
   validateEntries(entries);
   validateNavigation(config, nav);
   validateRequiredAssets();
+  validateFigureIndex(config, entries, nav, index.body);
 
   if (errors.length > 0) {
     console.error('❌ Metadata consistency check failed:');

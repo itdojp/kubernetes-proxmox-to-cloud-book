@@ -43,24 +43,10 @@ Proxmox のクラスタは quorum（多数決）で成立します。
 
 ## 図：検証環境のレイヤ（概念）
 
-```mermaid
-flowchart TB
-  subgraph PVE[Proxmox VE Cluster（3ノード）]
-    P1[PVE Node 1]
-    P2[PVE Node 2]
-    P3[PVE Node 3]
-  end
-
-  subgraph VMs[Kubernetes Nodes（VM）]
-    CP[control-plane 1]
-    W1[worker 1]
-    W2[worker 2]
-  end
-
-  P1 --> CP
-  P2 --> W1
-  P3 --> W2
-```
+<figure id="figure-05-lab-layers">
+  <img src="../../assets/images/figures/05-lab-layers.svg" alt="3ノードのProxmox VE ClusterであるPVE Node 1、2、3が、それぞれKubernetes VMのcontrol-plane 1、worker 1、worker 2を配置する検証環境のレイヤ構成。">
+  <figcaption>図5：検証環境のレイヤ（概念）。<a href="../../appendices/figure-index/#figure-05-lab-layers">目的と確認観点は図表索引を参照</a>。</figcaption>
+</figure>
 
 ## Proxmox クラスタ作成（最小手順）
 

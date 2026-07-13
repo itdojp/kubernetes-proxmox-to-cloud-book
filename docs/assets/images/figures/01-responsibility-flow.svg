@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">責務とデータフロー</title>
+  <desc id="desc">開発端末またはCIがコンテナレジストリへイメージを登録し、Kubernetesノードが取得する。Proxmox VE上のLinux VMがノードを提供し、control planeからkubelet、CRI、containerd、OCI runtimeを経てコンテナを実行する。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8Z" fill="#245b8f"/></marker></defs>
+  <rect width="960" height="540" fill="#f8fafc"/>
+  <text x="40" y="48" font-family="sans-serif" font-size="27" font-weight="700" fill="#17324d">責務とデータフロー</text>
+  <rect x="45" y="85" width="185" height="70" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="137" y="116" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#17324d">開発端末 / CI</text><text x="137" y="141" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#17324d">build / push</text>
+  <rect x="330" y="85" width="185" height="70" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/><text x="422" y="116" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#17324d">Container Registry</text><text x="422" y="141" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#17324d">イメージ保管</text>
+  <rect x="615" y="85" width="185" height="70" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="707" y="116" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#17324d">Kubernetes Node</text><text x="707" y="141" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#17324d">pull / 実行</text>
+  <path d="M230 120H320" stroke="#245b8f" stroke-width="3" marker-end="url(#arrow)"/><path d="M515 120H605" stroke="#245b8f" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="45" y="230" width="200" height="70" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><text x="145" y="273" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#5f3b05">Proxmox VE</text>
+  <rect x="330" y="230" width="185" height="70" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="422" y="260" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#5f3b05">Linux VM</text><text x="422" y="285" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#5f3b05">ノード基盤</text>
+  <path d="M245 265H320" stroke="#9a5a0a" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M515 265H565V185H707V158" stroke="#9a5a0a" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <text x="575" y="207" font-family="sans-serif" font-size="15" fill="#5f3b05">VM上でノードを稼働</text>
+  <rect x="45" y="375" width="160" height="70" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/><text x="125" y="406" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#3b1b76">Control Plane</text><text x="125" y="431" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#3b1b76">状態を制御</text>
+  <rect x="255" y="375" width="130" height="70" rx="8" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/><text x="320" y="417" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#3b1b76">kubelet</text>
+  <rect x="435" y="375" width="130" height="70" rx="8" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/><text x="500" y="417" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#3b1b76">CRI</text>
+  <rect x="615" y="375" width="145" height="70" rx="8" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/><text x="687" y="406" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="700" fill="#3b1b76">containerd</text><text x="687" y="431" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#3b1b76">OCI runtime</text>
+  <rect x="810" y="375" width="105" height="70" rx="8" fill="#fae8ff" stroke="#c026d3" stroke-width="2"/><text x="862" y="417" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="700" fill="#701a75">Containers</text>
+  <path d="M205 410H245" stroke="#5b2a86" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M385 410H425" stroke="#5b2a86" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M565 410H605" stroke="#5b2a86" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M760 410H800" stroke="#5b2a86" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M800 120H930V410H918" stroke="#245b8f" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <text x="836" y="348" font-family="sans-serif" font-size="15" fill="#17324d">実行対象</text>
+  <text x="40" y="500" font-family="sans-serif" font-size="16" fill="#475569">実装を置き換える前に、イメージ流通・基盤提供・コンテナ実行の責務を分けて確認する。</text>
+</svg>
