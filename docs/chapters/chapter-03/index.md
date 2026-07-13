@@ -41,7 +41,7 @@ Proxmox のクラスタは quorum（多数決）で成立します。
 
 2ノード構成は split-brain（相互に正だと判断する分断）を避けるために追加の設計（例: qdevice）が必要になり、検証の主目的から外れやすいため、本書では扱いません。
 
-## 図：検証環境のレイヤ（概念）
+## 図5：検証環境のレイヤ（概念）
 
 <figure id="figure-05-lab-layers">
   <img src="../../assets/images/figures/05-lab-layers.svg" alt="3ノードのProxmox VE ClusterであるPVE Node 1、2、3が、それぞれKubernetes VMのcontrol-plane 1、worker 1、worker 2を配置する検証環境のレイヤ構成。">

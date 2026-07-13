@@ -84,14 +84,14 @@ Kubernetes リソースは Git を単一のソースにし、差分は Pull Requ
 - 検証の都合で、本番の特定機能へ過度に依存する（後で差し替え不能になる）
 - 手順をスクリプト化して、判断基準や前提が読めない状態にする（属人化・監査不能につながる）
 
-## 図1：検証→本番の昇格（promotion）モデル（概念）
+## 図3：検証→本番の昇格（promotion）モデル（概念）
 
 <figure id="figure-03-promotion-model">
   <img src="../../assets/images/figures/03-promotion-model.svg" alt="作業者がPull Requestを作成し、レビューと承認、main反映、CI、Proxmox検証クラスタへの反映、動作確認と観測、手順更新を経て、本番向け差分を適用しクラウド本番クラスタへ反映する昇格フロー。">
   <figcaption>図3：検証→本番の昇格（promotion）モデル（概念）。<a href="../../appendices/figure-index/#figure-03-promotion-model">目的と確認観点は図表索引を参照</a>。</figcaption>
 </figure>
 
-## 図2：差分吸収（base + overlays / values）（概念）
+## 図4：差分吸収（base + overlays / values）（概念）
 
 <figure id="figure-04-configuration-differences">
   <img src="../../assets/images/figures/04-configuration-differences.svg" alt="共通のKustomize baseから検証用overlayと本番用overlayを派生させ、共通のHelm valuesから検証用valuesと本番用valuesを派生させる。共通化と環境差分の分離を示す図。">

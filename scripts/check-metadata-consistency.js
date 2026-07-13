@@ -450,7 +450,7 @@ function validateFigureIndex(config, entries, nav, indexBody) {
   assertEqual(figureIndex.data.layout, 'book', `${figureIndexRel} front matter layout`);
   assertEqual(figureIndex.data.title, '図表索引', `${figureIndexRel} front matter title`);
   assertContains(figureIndex.body, '# 図表索引', `${figureIndexRel} heading`);
-  if (/(screenshot|favicon)/i.test(figureIndex.body)) {
+  if (/(screenshot|favicon|スクリーンショット|ファビコン)/i.test(figureIndex.body)) {
     addError(`${figureIndexRel} must not list screenshots, planned images, or favicon assets.`);
   }
 
@@ -478,6 +478,7 @@ function validateFigureIndex(config, entries, nav, indexBody) {
     if (!chapter) continue;
     const assetFromChapter = figure.asset.replace(/^docs\//, '../../');
     assertContains(chapter.body, `<figure id="${figure.anchor}">`, `${chapter.relPath} stable figure anchor`);
+    assertContains(chapter.body, `## ${figure.title}`, `${chapter.relPath} figure heading`);
     assertContains(chapter.body, `<img src="${assetFromChapter}"`, `${chapter.relPath} static SVG reference`);
     assertContains(chapter.body, `<figcaption>${figure.title}`, `${chapter.relPath} figure caption`);
     assertContains(figureIndex.body, `#${figure.anchor}`, `${figureIndexRel} figure anchor reference`);
