@@ -81,43 +81,17 @@ Proxmox VE は Kubernetes の外側にある仮想化基盤です。役割は次
 
 ## 図1：責務とデータフロー（概念）
 
-```mermaid
-flowchart LR
-  Dev[開発端末/CI] -->|build/push| Reg[Container Registry]
-  Reg -->|pull| Node[K8s Node]
-
-  Proxmox[Proxmox VE] --> VM[VM (Linux)]
-  VM --> Node
-
-  CP[Kubernetes Control Plane] --> Kubelet[kubelet]
-  Kubelet -->|CRI| Runtime[containerd 等]
-  Runtime -->|OCI runtime| Containers[Containers]
-  Node --> Containers
-```
+<figure id="figure-01-responsibility-flow">
+  <img src="../../assets/images/figures/01-responsibility-flow.svg" alt="開発端末またはCIがコンテナレジストリへイメージを登録し、Kubernetesノードが取得する流れ。Proxmox VE上のLinux VMがノードを提供し、control planeからkubelet、CRI、containerd、OCI runtimeを経てコンテナを実行する責務の連鎖。">
+  <figcaption>図1：責務とデータフロー（概念）。<a href="../../appendices/figure-index/#figure-01-responsibility-flow">目的と確認観点は図表索引を参照</a>。</figcaption>
+</figure>
 
 ## 図2：アーキテクチャ比較（検証 vs 本番）
 
-```mermaid
-flowchart TB
-  subgraph Lab[検証: Proxmox + kubeadm]
-    PVE[Proxmox VE] --> VM1[VM: control-plane]
-    PVE --> VM2[VM: worker]
-    PVE --> VM3[VM: worker]
-    VM1 --> Addons1[Addons: CNI/LB/Ingress/Storage]
-    VM2 --> Addons1
-    VM3 --> Addons1
-  end
-
-  subgraph Prod[本番: クラウド]
-    Cloud[Cloud] --> MK8s[Managed Kubernetes]
-    Cloud --> LB[Cloud Load Balancer]
-    Cloud --> Storage[Managed Storage]
-    Cloud --> IAM[IAM/SSO]
-    MK8s --> LB
-    MK8s --> Storage
-    MK8s --> IAM
-  end
-```
+<figure id="figure-02-lab-production-comparison">
+  <img src="../../assets/images/figures/02-lab-production-comparison.svg" alt="検証環境ではProxmox VEがcontrol-plane VM 1台とworker VM 2台を提供し、3台すべてがCNI、ロードバランサー、Ingress、ストレージのアドオン群を利用する。本番環境ではクラウドのManaged Kubernetes、Cloud Load Balancer、Managed Storage、IAMまたはSSOへ責務を置き換える比較図。">
+  <figcaption>図2：アーキテクチャ比較（検証 vs 本番）。<a href="../../appendices/figure-index/#figure-02-lab-production-comparison">目的と確認観点は図表索引を参照</a>。</figcaption>
+</figure>
 
 ## 公式ドキュメント（参照）
 

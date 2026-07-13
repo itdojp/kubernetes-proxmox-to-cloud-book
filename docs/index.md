@@ -41,6 +41,7 @@ version: "0.1.0"
 - まず正常系の確認項目を固定したい: [付録：スモークテストと完了チェックリスト](appendices/smoke-test-checklist/)
 - 検証→本番の差分を整理したい: 第2章 → 第11章 → 第12章
 - マニフェスト運用（Kustomize/Helm）が主目的: 第6章 → 第7章 → 第8章 → 第9章 → 第10章
+- 概念図を目的別に参照したい: [付録：図表索引](appendices/figure-index/)
 
 Quickstart から入る場合は、次の 3 点だけ先に固定すると迷いにくくなります。
 
@@ -93,6 +94,7 @@ Quickstart から入る場合は、次の 3 点だけ先に固定すると迷い
   - [検証済みバージョン一覧（Version Matrix）](appendices/version-matrix/)
   - [トラブルシューティング](appendices/troubleshooting/)
   - [用語集](appendices/glossary/)
+  - [図表索引](appendices/figure-index/)
   - [更新履歴とメンテ方針](appendices/update-notes/)
 - あとがき
   - [あとがき](afterword/)

@@ -44,6 +44,8 @@ appendices:
     path: "/appendices/troubleshooting/"
   - title: "付録：用語集"
     path: "/appendices/glossary/"
+  - title: "付録：図表索引"
+    path: "/appendices/figure-index/"
   - title: "付録：更新履歴とメンテ方針"
     path: "/appendices/update-notes/"
 

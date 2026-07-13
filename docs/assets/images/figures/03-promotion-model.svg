@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480" viewBox="0 0 960 480" role="img" aria-labelledby="title desc">
+  <title id="title">検証から本番への昇格モデル</title>
+  <desc id="desc">作業者、Pull Request、レビューと承認、mainへの反映、CI、Proxmox検証クラスタへの反映、動作確認と観測および手順更新、本番向け差分の適用、クラウド本番クラスタへの反映を順に進むフロー。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8Z" fill="#245b8f"/></marker></defs>
+  <rect width="960" height="480" fill="#f8fafc"/>
+  <text x="40" y="48" font-family="sans-serif" font-size="27" font-weight="700" fill="#17324d">検証→本番の昇格（promotion）モデル</text>
+
+  <g font-family="sans-serif" text-anchor="middle">
+    <rect x="25" y="105" width="105" height="82" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="77" y="133" font-size="14" fill="#475569">1</text><text x="77" y="158" font-size="18" font-weight="700" fill="#17324d">作業者</text><text x="77" y="178" font-size="13" fill="#17324d">変更を作る</text>
+    <rect x="155" y="105" width="125" height="82" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="217" y="129" font-size="14" fill="#475569">2</text><text x="217" y="152" font-size="17" font-weight="700" fill="#17324d">Pull Request</text><text x="217" y="176" font-size="13" fill="#17324d">証跡を残す</text>
+    <rect x="305" y="105" width="125" height="82" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="367" y="129" font-size="14" fill="#475569">3</text><text x="367" y="152" font-size="17" font-weight="700" fill="#3b1b76">レビュー</text><text x="367" y="176" font-size="14" fill="#3b1b76">承認</text>
+    <rect x="455" y="105" width="110" height="82" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+    <text x="510" y="129" font-size="14" fill="#475569">4</text><text x="510" y="153" font-size="18" font-weight="700" fill="#17324d">main</text><text x="510" y="176" font-size="14" fill="#17324d">反映</text>
+    <rect x="590" y="105" width="120" height="82" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="650" y="129" font-size="14" fill="#475569">5</text><text x="650" y="153" font-size="18" font-weight="700" fill="#5f3b05">CI</text><text x="650" y="176" font-size="13" fill="#5f3b05">lint / build</text>
+    <rect x="735" y="105" width="190" height="82" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+    <text x="830" y="126" font-size="14" fill="#78520b">6</text><text x="830" y="150" font-size="17" font-weight="700" fill="#5f3b05">Proxmox</text><text x="830" y="173" font-size="15" fill="#5f3b05">検証クラスタへ反映</text>
+  </g>
+  <path d="M130 146H145" stroke="#245b8f" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M280 146H295" stroke="#245b8f" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M430 146H445" stroke="#245b8f" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M565 146H580" stroke="#245b8f" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M710 146H725" stroke="#245b8f" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g font-family="sans-serif" text-anchor="middle">
+    <rect x="490" y="270" width="210" height="92" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+    <text x="595" y="295" font-size="14" fill="#78520b">7</text><text x="595" y="320" font-size="17" font-weight="700" fill="#5f3b05">動作確認・観測</text><text x="595" y="345" font-size="15" fill="#5f3b05">手順と停止線を更新</text>
+    <rect x="275" y="270" width="185" height="92" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="367" y="295" font-size="14" fill="#78520b">8</text><text x="367" y="320" font-size="16" font-weight="700" fill="#5f3b05">本番向け差分</text><text x="367" y="345" font-size="15" fill="#5f3b05">を適用</text>
+    <rect x="35" y="270" width="210" height="92" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="140" y="295" font-size="14" fill="#166534">9</text><text x="140" y="320" font-size="17" font-weight="700" fill="#14532d">クラウド本番</text><text x="140" y="345" font-size="15" fill="#14532d">クラスタへ反映</text>
+  </g>
+  <path d="M830 187V225H720V316H705" stroke="#245b8f" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M490 316H470" stroke="#245b8f" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M275 316H255" stroke="#245b8f" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="40" y="440" font-family="sans-serif" font-size="16" fill="#475569">本番反映は、CI通過後に検証クラスタで確認し、手順と停止線を更新してから判断する。</text>
+</svg>
