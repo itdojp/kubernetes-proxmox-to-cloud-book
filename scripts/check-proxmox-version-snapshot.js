@@ -22,6 +22,7 @@ const REQUIRED_MARKERS = {
 
 const STALE_CURRENT_91_PATTERNS = [
   /Proxmox VE 9\.1[^\n]{0,80}(?:が利用可能|が現行版|を現行版|を最新(?:版)?)/,
+  /Proxmox VE 9\.1[^\n]{0,120}(?:現行版|最新(?:版)?)/,
   /(?:確認日時点|確認時点|2026-05-23 時点)[^\n]{0,120}(?:現行版|最新(?:版)?|利用可能)[^\n]{0,80}(?:Proxmox VE )?9\.1/,
   /(?:確認日時点|確認時点|2026-05-23 時点)[^\n]{0,120}(?:Proxmox VE )?9\.1[^\n]{0,80}(?:公式確認|利用可能|現行版|最新(?:版)?)/,
 ];
@@ -55,7 +56,7 @@ function checkSnapshot(contents) {
   for (const [relPath, content] of Object.entries(contents)) {
     for (const pattern of STALE_CURRENT_91_PATTERNS) {
       if (pattern.test(content)) {
-        errors.push(`${relPath} retains stale wording that presents Proxmox VE 9.1 as current on 2026-05-23.`);
+        errors.push(`${relPath} retains stale wording that presents Proxmox VE 9.1 as current.`);
         break;
       }
     }
@@ -68,18 +69,24 @@ function readContents() {
   const candidates = [path.join(repoRoot, 'README.md'), ...collectMarkdownFiles(path.join(repoRoot, 'docs'))]
     .filter((filePath) => fs.existsSync(filePath));
   return Object.fromEntries(candidates.map((filePath) => [
-    path.relative(repoRoot, filePath),
+    path.relative(repoRoot, filePath).split(path.sep).join('/'),
     fs.readFileSync(filePath, 'utf8'),
   ]));
 }
 
 function runSelfTest() {
-  const staleContents = readContents();
-  staleContents['docs/appendices/version-matrix/index.md'] += '\n2026-05-23 時点では Proxmox VE 9.1 を公式確認。\n';
-  const staleErrors = checkSnapshot(staleContents);
-  if (!staleErrors.some((error) => error.includes('presents Proxmox VE 9.1 as current'))) {
-    console.error('❌ Proxmox version snapshot self-test failed: stale 9.1 current wording was not rejected.');
-    process.exit(1);
+  for (const staleWording of [
+    '2026-05-23 時点では Proxmox VE 9.1 を公式確認。',
+    'Proxmox VE 9.1 は、2026-05-23 時点の現行版です。',
+  ]) {
+    const staleContents = readContents();
+    staleContents['docs/appendices/version-matrix/index.md'] = (staleContents['docs/appendices/version-matrix/index.md'] || '')
+      + `\n${staleWording}\n`;
+    const staleErrors = checkSnapshot(staleContents);
+    if (!staleErrors.some((error) => error.includes('presents Proxmox VE 9.1 as current'))) {
+      console.error(`❌ Proxmox version snapshot self-test failed: stale wording was not rejected: ${staleWording}`);
+      process.exit(1);
+    }
   }
 
   const historicalContents = readContents();
