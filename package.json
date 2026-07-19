@@ -11,8 +11,10 @@
   },
   "scripts": {
     "check:metadata": "node scripts/check-metadata-consistency.js",
+    "check:proxmox-version-snapshot": "node scripts/check-proxmox-version-snapshot.js",
+    "check:proxmox-version-snapshot:self-test": "node scripts/check-proxmox-version-snapshot.js --self-test",
     "check:security": "npm audit",
-    "test": "npm run check:metadata",
+    "test": "npm run check:metadata && npm run check:proxmox-version-snapshot && npm run check:proxmox-version-snapshot:self-test",
     "dev": "cd docs && (bundle check || bundle install) && bundle exec jekyll serve --livereload --baseurl ''",
     "build": "cd docs && (bundle check || bundle install) && bundle exec jekyll build",
     "dev:podman": "bash scripts/jekyll-podman.sh serve",
