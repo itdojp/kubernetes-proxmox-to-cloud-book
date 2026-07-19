@@ -64,7 +64,7 @@
       },
       {
         "id": "chapter-05",
-        "title": "第5章：追加コンポーネント（CNI / MetalLB / Ingress / Storage）",
+        "title": "第5章：追加コンポーネント（CNI / MetalLB / Gateway API / Storage）",
         "path": "/chapters/chapter-05/",
         "description": "検証環境で必ず差分が出るアドオンを整理し、選定・構築する"
       },

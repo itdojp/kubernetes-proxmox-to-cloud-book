@@ -6,7 +6,7 @@
 
 1. `examples/proxmox/`（Proxmox 検証基盤）
 2. `examples/k8s/bootstrap/`（kubeadm + containerd）
-3. `examples/k8s/addons/`（CNI/LB/Ingress/Storage）
+3. `examples/k8s/addons/`（CNI/LB/Gateway API/Storage）
 4. `examples/apps/sample-app/`（サンプルアプリ）
 5. `examples/gitops/`（GitOps/CI/CD の例）
 
@@ -16,12 +16,12 @@
 # kubeadm init（control-plane）
 sudo kubeadm init --config examples/k8s/bootstrap/kubeadm-init.yaml
 
-# CNI/MetalLB/Ingress/Storage
+# CNI/MetalLB/Gateway API/Storage
 bash examples/k8s/addons/cni/calico/install.sh
 bash examples/k8s/addons/metallb/install.sh
 kubectl apply -f examples/k8s/addons/metallb/ipaddresspool.yaml
 kubectl apply -f examples/k8s/addons/metallb/l2advertisement.yaml
-bash examples/k8s/addons/ingress-nginx/install.sh
+bash examples/k8s/addons/envoy-gateway/install.sh
 bash examples/k8s/addons/storage/local-path/install.sh
 ```
 

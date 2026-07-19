@@ -12,9 +12,14 @@ service:
   type: ClusterIP
   port: 80
 
+gateway:
+  enabled: false
+  className: eg
+  host: sample-app.local
+
 ingress:
   enabled: false
-  className: nginx
+  className: ""
   host: sample-app.local
   path: /
 
@@ -33,4 +38,3 @@ resources:
   limits:
     cpu: 100m
     memory: 128Mi
-

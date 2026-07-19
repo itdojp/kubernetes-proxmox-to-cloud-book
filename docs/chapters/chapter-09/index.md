@@ -29,7 +29,7 @@ title: "第9章：Helm 基礎"
 
 - `Chart.yaml`: Chart のメタ情報
 - `values.yaml`: デフォルト値（環境差分は別ファイルへ寄せる）
-- `templates/`: Kubernetes リソースのテンプレート（Deployment/Service/Ingress/ConfigMap 等）
+- `templates/`: Kubernetes リソースのテンプレート（Deployment/Service/Gateway/HTTPRoute/Ingress/ConfigMap 等）
 
 ## values 設計（環境差分の入れどころ）
 
@@ -39,6 +39,8 @@ title: "第9章：Helm 基礎"
 
 - 検証（Proxmox）: `examples/apps/sample-app/helm/values-proxmox-dev.yaml`
 - 本番（クラウド）: `examples/apps/sample-app/helm/values-cloud-prod.yaml`
+
+Proxmox 向け values は `GatewayClass` `eg` の Gateway API を有効にします。cloud-prod 向け values は Gateway API を無効にし、`IngressClass` `alb` を明示した Ingress を有効にします。2つの入口を同時に有効化しないことと、cloud-prod のクラス名をレンダリング結果で確認することをレビュー契約にします。
 
 ## helm template と helm install/upgrade の使い分け
 

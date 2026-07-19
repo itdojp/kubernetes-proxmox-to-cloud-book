@@ -24,8 +24,8 @@ Quickstart は「詳細な最適化」よりも「最短での成功体験」を
 
 ### A. 成功体験（検証ラボ）
 
-- 目的: Kubernetes の基本要素（CNI/LB/Ingress/Storage）を一度動かす
-- 構成例: Proxmox 3ノード + VM 3台（control-plane 1 + worker 2）、Calico、MetalLB（L2）、ingress-nginx（例示）、local-path
+- 目的: Kubernetes の基本要素（CNI/LB/Gateway API/Storage）を一度動かす
+- 構成例: Proxmox 3ノード + VM 3台（control-plane 1 + worker 2）、Calico、MetalLB（L2）、Envoy Gateway、local-path
 - 到達条件: サンプルアプリへ `curl` で到達できる
 
 ### B. 運用練習（障害対応まで）
@@ -47,7 +47,7 @@ Quickstart は「詳細な最適化」よりも「最短での成功体験」を
 
 1. Proxmox に 3 ノード（VM）を用意する（第3章）
 2. kubeadm + containerd でクラスタを構築する（第4章）
-3. CNI / LB / Ingress / Storage を導入する（第5章）
+3. CNI / LB / Gateway API / Storage を導入する（第5章）
 4. raw YAML でサンプルアプリをデプロイする（第6章）
 
 ## 最小成功パス（コマンド + 合格条件）
@@ -231,17 +231,18 @@ kubectl -n metallb-system get pods
 
 - `metallb-system` の Pod が `Running`
 
-### Step 8. Ingress Controller（ingress-nginx は検証の例示）
+### Step 8. Gateway API Controller（Envoy Gateway）
 
 ```bash
-bash examples/k8s/addons/ingress-nginx/install.sh
-kubectl -n ingress-nginx get pods
-kubectl -n ingress-nginx get svc ingress-nginx-controller
+bash examples/k8s/addons/envoy-gateway/install.sh
+kubectl -n envoy-gateway-system get pods
+kubectl get gatewayclass eg
 ```
 
 合格条件（例）:
 
-- `ingress-nginx-controller` の Service に `EXTERNAL-IP` が付与される（MetalLB の払い出し）
+- `GatewayClass` `eg` の `ACCEPTED` が `True`
+- `envoy-gateway-system` の Deployment が Available
 
 ### Step 9. サンプルアプリ（raw YAML）
 
@@ -250,17 +251,19 @@ kubectl apply -f examples/apps/sample-app/raw-yaml/namespace.yaml
 kubectl apply -f examples/apps/sample-app/raw-yaml/configmap.yaml
 kubectl apply -f examples/apps/sample-app/raw-yaml/deployment.yaml
 kubectl apply -f examples/apps/sample-app/raw-yaml/service.yaml
-kubectl apply -f examples/apps/sample-app/raw-yaml/ingress.yaml
+kubectl apply -f examples/apps/sample-app/raw-yaml/gateway.yaml
+kubectl apply -f examples/apps/sample-app/raw-yaml/httproute.yaml
 
-kubectl -n sample-app get deploy,po,svc,ing
+kubectl -n sample-app get deploy,po,svc,gateway,httproute
 kubectl -n sample-app logs deploy/sample-app
 ```
 
-到達確認（Ingress）:
+到達確認（Gateway API）:
 
 ```bash
-kubectl -n ingress-nginx get svc ingress-nginx-controller
-curl -sS -H 'Host: sample-app.local' http://<INGRESS_EXTERNAL_IP>/
+kubectl -n sample-app get gateway sample-app
+GATEWAY_ADDRESS="$(kubectl -n sample-app get gateway sample-app -o jsonpath='{.status.addresses[0].value}')"
+curl -sS -H 'Host: sample-app.local' "http://${GATEWAY_ADDRESS}/"
 ```
 
 合格条件（例）:
@@ -272,7 +275,7 @@ curl -sS -H 'Host: sample-app.local' http://<INGRESS_EXTERNAL_IP>/
 - `kubectl get nodes` は CNI 導入前は `NotReady` が正常です（異常と誤認しない）。
 - `kubeadm join` の token は期限があります。失敗した場合は `kubeadm token create --print-join-command` で再生成します。
 - MetalLB の IP pool が DHCP/静的割り当てと衝突すると、原因の切り分けが難航します（IP 管理の責務を先に固定します）。
-- Ingress は Host と名前解決が揃わないと 404 になりやすいです（`curl -H 'Host: ...'` と `/etc/hosts` を先に疑う）。
+- Gateway API は `Gateway` / `HTTPRoute` の Accepted・ResolvedRefs 条件と Host が揃わないと到達できません（`kubectl describe` と `curl -H 'Host: ...'` を確認します）。
 
 ## 失敗時に見る最小セット（切り分けの入口）
 
