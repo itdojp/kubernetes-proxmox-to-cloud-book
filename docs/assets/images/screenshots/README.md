@@ -16,7 +16,7 @@
 - Proxmox UI にログイン可能
 - 検証用 VM（例: `k8s-cp1`/`k8s-w1`/`k8s-w2`）が作成済み
 - Kubernetes クラスタ作成済み（例: 3ノード）
-- Ingress / サンプルアプリがデプロイ済み
+- Envoy Gateway / サンプルアプリがデプロイ済み
 
 - [ ] Proxmox UI: ログイン後の全体（Datacenter 直下の概要: ノード/リソース）
 - [ ] Proxmox UI: VM 一覧（`k8s-cp1`/`k8s-w1`/`k8s-w2` が見える状態）
@@ -25,7 +25,7 @@
 - [ ] 端末: `pvecm status`（quorum/ノード数）
 - [ ] 端末: `qm list`（VM 作成済みの確認）
 - [ ] 端末: `kubectl get nodes -o wide`（3ノード確認）
-- [ ] 端末: `kubectl -n ingress-nginx get svc ingress-nginx-controller`（EXTERNAL-IP 付与）
+- [ ] 端末: `kubectl -n sample-app get gateway,httproute`（address と Accepted 条件）
 - [ ] ブラウザ: サンプルアプリ到達確認（`Host: sample-app.local` のレスポンス）
 
 ### 第3章：Proxmox VE 3ノード検証基盤（`docs/chapters/chapter-03/index.md`）
@@ -55,14 +55,14 @@
 - [ ] 端末: `kubectl get nodes`（CNI 導入前後の状態差が分かる）
 - [ ] 端末: `systemctl status containerd`（ランタイム稼働の確認）
 
-### 第5章：追加コンポーネント（`docs/chapters/chapter-05/index.md`）
+### 第5章：追加コンポーネント（Gateway API）（`docs/chapters/chapter-05/index.md`）
 
 前提（例）:
-- CNI（例: Calico）、LB（例: MetalLB）、Ingress Controller、StorageClass などを導入する
+- CNI（例: Calico）、LB（例: MetalLB）、Gateway API Controller、StorageClass などを導入する
 
 - [ ] 端末: Calico 導入後の `kubectl get pods -A`（CNI 成立の確認）
 - [ ] 端末: MetalLB の `IPAddressPool`/`L2Advertisement` 適用後の状態（`kubectl -n metallb-system get pods` 等）
-- [ ] 端末: Ingress Controller の Service が LoadBalancer になる状態（EXTERNAL-IP）
+- [ ] 端末: `GatewayClass` `eg` と Gateway の address、HTTPRoute の Accepted / ResolvedRefs
 - [ ] 端末: StorageClass（local-path）が default になっている状態（`kubectl get sc`）
 
 ### 第6章：サンプルアプリ（`docs/chapters/chapter-06/index.md`）
@@ -70,7 +70,7 @@
 前提（例）:
 - `sample-app` namespace（または本文で定義する namespace）にリソースを作成済み
 
-- [ ] 端末: `kubectl -n sample-app get deploy,po,svc,ing`（リソース関係の見える化）
+- [ ] 端末: `kubectl -n sample-app get deploy,po,svc,gateway,httproute`（リソース関係の見える化）
 - [ ] ブラウザ: サンプルアプリの画面（設定値が反映される）
 
 ### 第7章：Kustomize 基礎（`docs/chapters/chapter-07/index.md`）
@@ -86,7 +86,7 @@
 前提（例）:
 - `proxmox-dev` と `cloud-prod` のような環境差分を overlay で管理している
 
-- [ ] IDE/Editor: `proxmox-dev` と `cloud-prod` の差分（patch/replica/image/IngressClass 等）
+- [ ] IDE/Editor: `proxmox-dev` の Gateway API と `cloud-prod` の明示的 IngressClass の差分
 - [ ] 端末: `kubectl diff -k`（採用する場合。出力に秘匿情報がないこと）
 
 ### 第9章：Helm 基礎（`docs/chapters/chapter-09/index.md`）

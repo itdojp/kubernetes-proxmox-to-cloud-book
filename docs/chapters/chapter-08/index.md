@@ -23,7 +23,7 @@ title: "第8章：Kustomize 実務"
 | 方針 | ねらい | 具体例 |
 | --- | --- | --- |
 | base は共通（意図を揃える） | デバッグ/レビュー容易性 | Namespace/ラベル、Deployment の構造、probe、Config の論理構造 |
-| overlay は環境依存だけを持つ | 移行時の全面修正を防ぐ | replicas/resources、Ingress host、image tag/registry、StorageClass 等 |
+| overlay は環境依存だけを持つ | 移行時の全面修正を防ぐ | replicas/resources、L7 入口、image tag/registry、StorageClass 等 |
 | “置き換えポイント” を明示する | 検証→本番を現実的に | MetalLB→Cloud LB、local-path→Cloud CSI（第5章） |
 
 ## サンプルアプリで見る「環境差分」の具体例
@@ -34,8 +34,8 @@ title: "第8章：Kustomize 実務"
 
 - image tag: `latest`（例示。実務では pin 推奨）
 - ConfigMap: `TEXT=sample-app (proxmox-dev)`
-- Ingress host: `sample-app.local`（base と同一）
-- IngressClass: `nginx`（例。Ingress Controller に依存）
+- Gateway host: `sample-app.local`（base と同一）
+- GatewayClass: `eg`（Envoy Gateway）
 - replicas/resources: base を踏襲
 
 適用例:
@@ -49,7 +49,7 @@ kubectl apply -k examples/apps/sample-app/kustomize/overlays/proxmox-dev
 - replicas: 3（例）
 - resources: request/limit を引き上げ（例）
 - Ingress host: `sample-app.example.com`（例）
-- IngressClass: `alb` 等（例。クラウド側で Controller が変わると class も変わる）
+- IngressClass: `alb`（provider-managed controller の明示例）
 - image tag: base（`0.2.3`）を踏襲（pin）
 - ConfigMap: `TEXT=sample-app (cloud-prod)`
 
@@ -61,8 +61,8 @@ kubectl apply -k examples/apps/sample-app/kustomize/overlays/cloud-prod
 
 注記:
 
-- Ingress の差分は host だけではありません。Controller が変わると `spec.ingressClassName` も差分になります。
-- 本書のサンプルでは cloud-prod overlay に `patch-ingress-class.yaml`（json6902）を用意し、環境に合わせて変更できるようにしています。
+- L7 入口の差分は host だけではありません。本書の cloud-prod overlay は base の `Gateway` / `HTTPRoute` を削除し、`spec.ingressClassName: alb` を明示した `ingress.yaml` へ置き換えます。
+- `alb` は設計上の例です。採用クラウドで管理され、保守契約が明確な IngressClass 名へ変更してください。
 
 ## image tag/registry 差分（現実解）
 

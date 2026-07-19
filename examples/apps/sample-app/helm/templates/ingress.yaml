@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: sample-app
 spec:
-  ingressClassName: {{ .Values.ingress.className }}
+  ingressClassName: {{ required "ingress.className must be set when ingress.enabled=true" .Values.ingress.className }}
   rules:
     - host: {{ .Values.ingress.host }}
       http:
@@ -19,4 +19,3 @@ spec:
                 port:
                   name: http
 {{- end -}}
-

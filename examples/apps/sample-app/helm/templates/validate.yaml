@@ -1,0 +1,3 @@
+{{- if and .Values.gateway.enabled .Values.ingress.enabled -}}
+{{- fail "gateway.enabled and ingress.enabled cannot both be true" -}}
+{{- end -}}

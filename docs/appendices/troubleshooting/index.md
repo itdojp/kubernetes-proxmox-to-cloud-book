@@ -50,14 +50,15 @@ sudo systemctl status containerd --no-pager
 | Pod が `CrashLoopBackOff` | `kubectl -n <NS> describe pod <POD>`<br>`kubectl -n <NS> logs <POD>` | 設定ミス、イメージ取得失敗、probe 誤設定 | ログ/イベントから原因箇所を最小で修正、まず probe を疑う |
 | `ImagePullBackOff` | `kubectl -n <NS> describe pod <POD>` | registry 到達不可、タグ誤り、認証（Secret）不足 | タグ/URL を確認し、必要なら imagePullSecret を設定 |
 
-### CNI / MetalLB / Ingress / Storage
+### CNI / MetalLB / Gateway API / Storage
 
 | 症状 | 確認コマンド（最小） | 典型原因 | 対処（最小） |
 | --- | --- | --- | --- |
 | CNI 導入後も Node が `NotReady` | `kubectl -n kube-system get pods`<br>`kubectl -n kube-system logs ds/calico-node` | `podSubnet` 不一致、iptables/sysctl 不足 | `kubeadm-init.yaml` の `podSubnet` と CNI 設定の整合を確認（第4章/第5章） |
 | MetalLB で `EXTERNAL-IP` が付かない（Pending） | `kubectl -n metallb-system get pods`<br>`kubectl describe svc <SVC>` | IP pool 未適用、レンジ衝突、L2 到達性不足（ARP が通らない） | `IPAddressPool/L2Advertisement` を適用、レンジ衝突を解消（第5章、`examples/k8s/addons/metallb/`） |
-| Ingress が 404 | `kubectl -n <NS> get ing`<br>`kubectl -n <NS> describe ing <ING>` | Host 不一致、`ingressClassName` 不一致 | `curl -H 'Host: ...'` で Host を合わせる、IngressClass を確認 |
-| Ingress が 502/503 | `kubectl -n ingress-nginx logs deploy/ingress-nginx-controller`<br>`kubectl -n <NS> get endpoints <SVC>` | Service selector/port 不一致、Pod が Ready ではない | Service/Deployment の label/selector/port を確認（第6章） |
+| Gateway / HTTPRoute が Accepted にならない | `kubectl get gatewayclass`<br>`kubectl -n <NS> describe gateway <GW>`<br>`kubectl -n <NS> describe httproute <ROUTE>` | `gatewayClassName` 不一致、listener と hostname 不一致、参照先 Service 不備 | `Accepted` / `ResolvedRefs` の理由を確認し、class・Host・backendRef を合わせる |
+| Gateway 経由で 404 | `kubectl -n <NS> get gateway,httproute`<br>`kubectl -n <NS> describe httproute <ROUTE>` | Host 不一致、route が listener に attach されていない | `curl -H 'Host: ...'` で Host を合わせ、route の `Parents` 条件を確認 |
+| Gateway 経由で 502/503 | `kubectl -n envoy-gateway-system logs deploy/envoy-gateway`<br>`kubectl -n <NS> get endpoints <SVC>` | Service selector/port 不一致、Pod が Ready ではない | Service/Deployment の label/selector/port と HTTPRoute の backendRef を確認（第6章） |
 | PVC が `Pending` | `kubectl get sc`<br>`kubectl -n <NS> describe pvc <PVC>` | StorageClass 未導入、default StorageClass 未設定 | local-path を導入、必要なら default を設定（第5章、`examples/k8s/addons/storage/`） |
 
 ### Proxmox / ネットワーク（最低限）
@@ -76,7 +77,7 @@ sudo systemctl status containerd --no-pager
 
 - [ ] `kubectl get nodes` が想定どおり（Ready/role/IP が妥当）
 - [ ] `kubectl get pods -A` で `kube-system` と主要アドオンが `Running`（CrashLoop がない）
-- [ ] 入口の到達確認: `Service type=LoadBalancer` と Ingress の到達が確認できる
+- [ ] 入口の到達確認: Gateway に address が割り当てられ、HTTPRoute 経由で到達できる
 - [ ] ストレージを使う場合、PVC の確保と Pod 再スケジュール時の挙動を確認できる（要件次第）
 - [ ] 破壊的操作の停止線（ロールバック条件、復旧手順、連絡経路）を手順に明記した
 

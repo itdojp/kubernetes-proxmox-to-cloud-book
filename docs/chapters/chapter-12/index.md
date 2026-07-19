@@ -74,7 +74,7 @@ title: "第12章：本番運用（監視/ログ/セキュリティ/バックア�
 | 領域 | Proxmox 検証で確認すること | クラウド本番で確定すること |
 | --- | --- | --- |
 | Kubernetes version | kubeadm / kubelet / kubectl / アドオンの実バージョンを Version Matrix に記録する | Managed Kubernetes の supported version、upgrade window、Version Skew、provider 固有制約を確認する |
-| Ingress / Gateway | ingress-nginx 例で L7 経路と Host/TLS 設計を検証する | ingress-nginx retirement を踏まえ、Gateway API または維持される Controller を選定する |
+| Ingress / Gateway | Envoy Gateway と Gateway API で L7 経路と Host/TLS 設計を検証する | provider / 組織標準の Gateway API 実装または維持される Ingress Controller を選定する |
 | Storage / Backup | local-path / NFS などで PVC と復元（リストア）手順を演習する | Cloud CSI、snapshot、backup service、RPO/RTO、cross-region / cross-zone 復旧を定義する |
 | Identity / Secret | kubeconfig / RBAC / Secret 展開の最小運用を確認する | IAM/SSO、監査ログ、Secret 管理、Break-glass（緊急時）手順を組織標準へ接続する |
 | Observability | Pod / Node / Ingress の最低限のメトリクスとログを見られる | SLO、通知、当番、ログ保持、費用、個人情報/機密情報の扱いを決める |

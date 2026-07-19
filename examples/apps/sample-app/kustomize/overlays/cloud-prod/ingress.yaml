@@ -5,9 +5,9 @@ metadata:
   labels:
     app.kubernetes.io/name: sample-app
 spec:
-  ingressClassName: nginx
+  ingressClassName: alb
   rules:
-    - host: sample-app.local
+    - host: sample-app.example.com
       http:
         paths:
           - path: /
@@ -17,4 +17,3 @@ spec:
                 name: sample-app
                 port:
                   name: http
-

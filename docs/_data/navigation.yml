@@ -18,7 +18,7 @@ chapters:
     path: "/chapters/chapter-03/"
   - title: "第4章：Kubernetesクラスタ構築（kubeadm + containerd）"
     path: "/chapters/chapter-04/"
-  - title: "第5章：追加コンポーネント（CNI / MetalLB / Ingress / Storage）"
+  - title: "第5章：追加コンポーネント（CNI / MetalLB / Gateway API / Storage）"
     path: "/chapters/chapter-05/"
   - title: "第6章：サンプルアプリ（raw YAML）で基本動作確認"
     path: "/chapters/chapter-06/"

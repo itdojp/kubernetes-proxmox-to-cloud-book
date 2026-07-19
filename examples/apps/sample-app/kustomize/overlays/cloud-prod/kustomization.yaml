@@ -1,8 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: sample-app
+
 resources:
   - ../../base
+  - ingress.yaml
 
 configMapGenerator:
   - name: sample-app-config
@@ -19,11 +22,5 @@ patches:
     target:
       kind: Deployment
       name: sample-app
-  - path: patch-ingress-class.yaml
-    target:
-      kind: Ingress
-      name: sample-app
-  - path: patch-ingress-host.yaml
-    target:
-      kind: Ingress
-      name: sample-app
+  - path: delete-gateway.yaml
+  - path: delete-httproute.yaml

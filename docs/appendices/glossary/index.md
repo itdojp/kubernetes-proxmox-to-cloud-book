@@ -31,7 +31,7 @@ title: "用語集"
 | MetalLB | オンプレ/検証環境で `Service type=LoadBalancer` を成立させる実装 |
 | Ingress | HTTP/TLS ルーティングの宣言（Ingress Controller が必要） |
 | IngressClass | どの Controller が Ingress を処理するかを表すクラス |
-| Gateway API | Ingress の後継となる L4/L7 ルーティング API 群（実装に依存） |
+| Gateway API | L4/L7 ルーティングを、基盤側の GatewayClass/Gateway とアプリ側の Route に分離する API 群（実装に依存） |
 | CSI | ストレージの実装を差し込むための仕様 |
 | PV | 実体ストレージを表すリソース（プロビジョニング結果） |
 | PVC | アプリが要求するストレージの宣言（PV の割り当て要求） |
@@ -56,6 +56,6 @@ title: "用語集"
 ## チェックリスト（3〜10）
 
 - [ ] 重要用語（OCI/CRI/kubelet/containerd）を区別できる
-- [ ] Service/Ingress/IngressClass の関係を説明できる
+- [ ] Service/GatewayClass/Gateway/HTTPRoute の関係を説明できる
 - [ ] PV/PVC/StorageClass の関係を説明できる
 - [ ] GitOps/Argo CD/Helm/Kustomize の役割分担を言語化できる

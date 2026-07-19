@@ -22,9 +22,9 @@ title: "スモークテストと完了チェックリスト"
 | 観点 | 確認コマンド（最小） | 合格条件（例） | 再参照 |
 | --- | --- | --- | --- |
 | ノード/制御プレーン | `kubectl get nodes -o wide` | 想定 3 ノードが表示され、CNI 導入後は全ノード `Ready` | [第4章](../../chapters/chapter-04/) |
-| 主要アドオン | `kubectl get pods -A`<br>`kubectl -n metallb-system get pods`<br>`kubectl -n ingress-nginx get pods` | `kube-system` と主要アドオンに `CrashLoopBackOff` がない | [第5章](../../chapters/chapter-05/) |
-| 入口（LB/Ingress） | `kubectl -n ingress-nginx get svc ingress-nginx-controller`<br>`kubectl -n sample-app get ing` | `ingress-nginx-controller` に `EXTERNAL-IP` が付き、Ingress 定義が存在する | [第5章](../../chapters/chapter-05/) |
-| サンプルアプリ到達 | `kubectl -n sample-app get deploy,po,svc,ing`<br>`curl -sS -H 'Host: sample-app.local' http://<INGRESS_EXTERNAL_IP>/` | `curl` が 200 を返し、本文が確認できる | [第6章](../../chapters/chapter-06/) |
+| 主要アドオン | `kubectl get pods -A`<br>`kubectl -n metallb-system get pods`<br>`kubectl -n envoy-gateway-system get pods` | `kube-system` と主要アドオンに `CrashLoopBackOff` がない | [第5章](../../chapters/chapter-05/) |
+| 入口（Gateway API） | `kubectl get gatewayclass eg`<br>`kubectl -n sample-app get gateway,httproute` | `GatewayClass` が Accepted、`Gateway` に address があり、`HTTPRoute` が Accepted / ResolvedRefs | [第5章](../../chapters/chapter-05/) |
+| サンプルアプリ到達 | `kubectl -n sample-app get deploy,po,svc,gateway,httproute`<br>`curl -sS -H 'Host: sample-app.local' http://<GATEWAY_ADDRESS>/` | `curl` が 200 を返し、本文が確認できる | [第6章](../../chapters/chapter-06/) |
 
 ## 完了チェックリスト（検証クラスタ）
 
@@ -37,12 +37,12 @@ title: "スモークテストと完了チェックリスト"
 ### クラスタ/アドオン
 
 - [ ] `containerd` と `kubelet` が全ノードで起動している
-- [ ] CNI / MetalLB / Ingress / Storage の最低限が導入されている
+- [ ] CNI / MetalLB / Gateway API / Storage の最低限が導入されている
 - [ ] `kubectl get events -A --sort-by=.metadata.creationTimestamp | tail -n 50` で致命的な失敗が継続していない
 
 ### アプリ/入口
 
-- [ ] sample-app の Deployment/Service/Ingress が期待どおり作成されている
+- [ ] sample-app の Deployment/Service/Gateway/HTTPRoute が期待どおり作成されている
 - [ ] `curl -H 'Host: sample-app.local'` で到達確認できる
 - [ ] 障害切り分けの入口として、`kubectl logs` と `journalctl -u kubelet` をすぐ取得できる
 
@@ -57,7 +57,7 @@ title: "スモークテストと完了チェックリスト"
 
 - Proxmox/VM 前提を見直す: [第3章](../../chapters/chapter-03/)
 - kubeadm/containerd を見直す: [第4章](../../chapters/chapter-04/)
-- CNI / MetalLB / Ingress / Storage を見直す: [第5章](../../chapters/chapter-05/)
+- CNI / MetalLB / Gateway API / Storage を見直す: [第5章](../../chapters/chapter-05/)
 - sample-app の正常系を見直す: [第6章](../../chapters/chapter-06/)
 - 異常時の切り分けへ進む: [付録：トラブルシューティング](../troubleshooting/)
 - 検証対象バージョンを確認する: [付録：検証済みバージョン一覧（Version Matrix）](../version-matrix/)

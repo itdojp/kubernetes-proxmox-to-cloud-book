@@ -14,7 +14,7 @@ title: "第6章：サンプルアプリ（raw YAML）で基本動作確認"
 ## 前提
 
 - Kubernetesクラスタが Ready（第4章）
-- CNI/Ingress が導入済み（Ingress を使う場合。第5章）
+- CNI/Gateway API Controller が導入済み（外部公開する場合。第5章）
 - 本章で使うマニフェストは `examples/apps/sample-app/raw-yaml/` と一致させます
 
 ## サンプルアプリの構成（最小）
@@ -27,7 +27,7 @@ title: "第6章：サンプルアプリ（raw YAML）で基本動作確認"
 | ConfigMap | 設定の外出し | 変更がどこへ効くか（コンテナ引数/ENV） |
 | Deployment | Pod の宣言/更新 | rolling update、probe の挙動 |
 | Service | 到達性の抽象化 | selector/port の対応関係 |
-| Ingress（任意） | 外部公開 | Host/IngressClass/ルーティング |
+| Gateway / HTTPRoute（任意） | 外部公開 | Host/GatewayClass/ルーティング |
 
 ## デプロイ（raw YAML）
 
@@ -38,10 +38,11 @@ kubectl apply -f examples/apps/sample-app/raw-yaml/deployment.yaml
 kubectl apply -f examples/apps/sample-app/raw-yaml/service.yaml
 ```
 
-Ingress を使う場合（Ingress Controller 導入済みの場合のみ）:
+Gateway API で公開する場合（Envoy Gateway 導入済みの場合のみ）:
 
 ```bash
-kubectl apply -f examples/apps/sample-app/raw-yaml/ingress.yaml
+kubectl apply -f examples/apps/sample-app/raw-yaml/gateway.yaml
+kubectl apply -f examples/apps/sample-app/raw-yaml/httproute.yaml
 ```
 
 ## 変更点が “どこに効くか” を押さえる
@@ -54,7 +55,7 @@ raw YAML は「どの設定がどこに効くか」が 1 対 1 で追えるの�
 | `metadata.labels`（Pod） | Service が拾う対象 | selector とズレて到達できない |
 | `spec.selector`（Service） | Pod の選別 | “動いているのに繋がらない” |
 | `ports`（Service/Pod） | ポート対応 | targetPort のズレで 502/接続失敗 |
-| `Ingress.spec.rules.host` | ルーティング | Host 不一致で 404 |
+| `HTTPRoute.spec.hostnames` | ルーティング | Gateway listener の Host と不一致で経路が成立しない |
 | `readiness/livenessProbe` | 配信可否/再起動 | 誤検知で無限再起動/配信停止 |
 
 ## readiness/liveness（最低限）
@@ -69,7 +70,7 @@ raw YAML は「どの設定がどこに効くか」が 1 対 1 で追えるの�
 ## 動作確認（kubectl/curl）
 
 ```bash
-kubectl -n sample-app get deploy,po,svc,ing
+kubectl -n sample-app get deploy,po,svc,gateway,httproute
 kubectl -n sample-app describe deploy sample-app
 kubectl -n sample-app logs deploy/sample-app
 ```
@@ -81,18 +82,18 @@ kubectl -n sample-app port-forward svc/sample-app 18080:80
 curl -sS http://127.0.0.1:18080/
 ```
 
-Ingress で確認する場合（例: `sample-app.local`）:
+Gateway API で確認する場合（例: `sample-app.local`）:
 
 ```bash
-kubectl -n ingress-nginx get svc ingress-nginx-controller
-curl -sS -H 'Host: sample-app.local' http://<INGRESS_EXTERNAL_IP>/
+GATEWAY_ADDRESS="$(kubectl -n sample-app get gateway sample-app -o jsonpath='{.status.addresses[0].value}')"
+curl -sS -H 'Host: sample-app.local' "http://${GATEWAY_ADDRESS}/"
 ```
 
 ## 公式ドキュメント（参照）
 
 - [Kubernetes: Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 - [Kubernetes: Service](https://kubernetes.io/docs/concepts/services-networking/service/)
-- [Kubernetes: Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [Kubernetes: Gateway API](https://gateway-api.sigs.k8s.io/)
 - [Kubernetes: ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/)
 - [Kubernetes: Probes（readiness/liveness）](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
 

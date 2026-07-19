@@ -28,7 +28,7 @@ Kustomize は「YAML をテンプレート化する」のではなく、**差分
 
 `examples/apps/sample-app/kustomize/` の構造は次です。
 
-- `base/`: 共通（Namespace/Deployment/Service/Ingress 等）
+- `base/`: 共通（Namespace/Deployment/Service/Gateway/HTTPRoute 等）
 - `overlays/proxmox-dev/`: 検証（Proxmox）向け差分
 - `overlays/cloud-prod/`: 本番（クラウド）向け差分
 
@@ -47,13 +47,13 @@ kubectl apply -k examples/apps/sample-app/kustomize/overlays/cloud-prod
 Kustomize の patch は大きく 2 系統あります。
 
 - strategic merge patch: 「YAML の構造」を保ったまま上書きする（Deployment の `replicas`、resources 等に向く）
-- JSON6902 patch: 配列要素などを “パス指定” で正確に置換する（Ingress の `rules[0].host` 等に向く）
+- JSON6902 patch: 配列要素などを “パス指定” で正確に置換する（Deployment のコンテナ引数等に向く）
 
 本書の例:
 
 - strategic merge patch: `examples/apps/sample-app/kustomize/overlays/cloud-prod/patch-replicas.yaml`
 - strategic merge patch: `examples/apps/sample-app/kustomize/overlays/cloud-prod/patch-resources.yaml`
-- JSON6902 patch: `examples/apps/sample-app/kustomize/overlays/cloud-prod/patch-ingress-host.yaml`
+- resource replacement: `cloud-prod` では base の `Gateway` / `HTTPRoute` を delete patch で除外し、`ingress.yaml` を追加する
 
 ## generator（configMapGenerator/secretGenerator）を “過信しない”
 

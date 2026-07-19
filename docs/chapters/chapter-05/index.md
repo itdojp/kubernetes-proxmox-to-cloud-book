@@ -1,13 +1,13 @@
 ---
 layout: book
-title: "第5章：追加コンポーネント（CNI / MetalLB / Ingress / Storage）"
+title: "第5章：追加コンポーネント（CNI / MetalLB / Gateway API / Storage）"
 ---
 
-# 第5章：追加コンポーネント（CNI / MetalLB / Ingress / Storage）
+# 第5章：追加コンポーネント（CNI / MetalLB / Gateway API / Storage）
 
 ## この章の学習目標（3〜5）
 
-- CNI/LB/Ingress/Storage が「検証→本番」で差分要因になる理由を説明できる
+- CNI/LB/Gateway API/Storage が「検証→本番」で差分要因になる理由を説明できる
 - 追加コンポーネントの選定基準（要件/運用/変更容易性）を整理できる
 - 検証環境での導入手順を「本番へ移すための形」で記録できる
 
@@ -26,7 +26,7 @@ title: "第5章：追加コンポーネント（CNI / MetalLB / Ingress / Storag
 
 - CNI: Pod ネットワークの実装（ネットワークポリシー、運用、互換性）
 - Load Balancer: `Service type=LoadBalancer` の実体（検証: MetalLB / 本番: Cloud LB）
-- Ingress: L7 ルーティング/TLS 終端（コントローラ選定と運用）
+- Gateway API / Ingress: L7 ルーティング/TLS 終端（コントローラ選定と運用）
 - Storage: PV/PVC の裏側（検証: local/NFS 等 / 本番: クラウド CSI）
 
 ここを曖昧にしたままアプリを作ると、移行時に全面修正になります。
@@ -35,7 +35,7 @@ title: "第5章：追加コンポーネント（CNI / MetalLB / Ingress / Storag
 
 1. CNI（Pod ネットワークが成立しないと node が Ready にならない）
 2. MetalLB（検証環境で LoadBalancer を成立させる）
-3. Ingress（ingress-nginx 等を外部公開する）
+3. Gateway API（Envoy Gateway で外部公開する）
 4. Storage（動くが、要件次第で後回しにできる）
 
 ## CNI（検証しやすさ/本番互換）
@@ -86,11 +86,11 @@ kubectl apply -f examples/k8s/addons/metallb/l2advertisement.yaml
 - `Service type=LoadBalancer` に `EXTERNAL-IP` が払い出される（`kubectl get svc -A`）
 - 払い出された IP が “どのレンジから来たか” を追跡できる（`IPAddressPool` と一致する）
 
-## Ingress（ingress-nginx と DNS/Host 設計）
+## Gateway API（Envoy Gateway と DNS/Host 設計）
 
-アプリを `Ingress` で公開するために、Ingress Controller を導入します。
-本書では例として ingress-nginx を使いますが、**ingress-nginx は Retirement（段階的終了）** が告知されています。公式告知では best-effort maintenance は 2026年3月までで、その後は新規リリース、bugfix、security update が提供されない前提です。
-そのため、ここでの ingress-nginx は **検証の例示** と位置づけ、本番では Gateway API または組織標準/クラウド標準の Ingress Controller へ置き換える前提で読み進めてください。
+新規の検証環境では Gateway API を既定とし、実装として Envoy Gateway を導入します。本書の固定版は v1.8.0 です。`GatewayClass` `eg` と、アプリ側の `Gateway` / `HTTPRoute` の責務を分けるため、Controller を置き換える場合も境界をレビューできます。
+
+ingress-nginx は Retirement（段階的終了）が告知され、2026年3月以降は新規リリース、bugfix、security update が提供されない前提です。歴史的な参照用 installer は残しますが、明示的な opt-in なしでは実行できず、Quickstart や新規環境では使用しません。
 
 本番の選定観点（例）:
 
@@ -105,27 +105,29 @@ kubectl apply -f examples/k8s/addons/metallb/l2advertisement.yaml
 | 判定項目 | 本番へ持ち込む条件 |
 | --- | --- |
 | Controller の保守状態 | upstream / vendor / provider の更新と security advisory を継続確認できる |
-| Gateway API / Ingress 方針 | 新規設計は Gateway API も候補に含め、既存 Ingress annotation 依存を棚卸しする |
+| Gateway API / Ingress 方針 | 新規設計は Gateway API を既定とし、既存 Ingress annotation 依存を棚卸しする |
 | TLS / DNS / LB | 証明書更新、DNS 切替、Cloud LB 課金、WAF/CDN 連携の責任者が明確である |
 | 退避策 | 切替失敗時に旧経路へ戻す条件、TTL、タイムアウト、担当者が Runbook 化されている |
 
-インストール例（Service type=LoadBalancer を前提）:
+インストール例（Gateway のデータプレーン Service に MetalLB が外部 IP を付与する前提）:
 
 ```bash
-bash examples/k8s/addons/ingress-nginx/install.sh
+bash examples/k8s/addons/envoy-gateway/install.sh
 ```
 
-外部 IP の確認（MetalLB が割り当てます）:
+Controller と GatewayClass の確認:
 
 ```bash
-kubectl -n ingress-nginx get svc ingress-nginx-controller
+kubectl -n envoy-gateway-system get pods
+kubectl get gatewayclass eg
 ```
 
 検証観点（例）:
 
-- `ingress-nginx-controller` の Service に `EXTERNAL-IP` が付与される
-- `kubectl -n <NS> describe ing <ING>` で `ingressClassName` が意図どおりである
-- `curl -H 'Host: ...'` で 200 が返る（Host/IngressClass の不整合を検出できる）
+- `GatewayClass` `eg` の `ACCEPTED` が `True` である
+- `kubectl -n <NS> describe gateway <GATEWAY>` で address と listener 条件を確認できる
+- `kubectl -n <NS> describe httproute <ROUTE>` で `Accepted=True` / `ResolvedRefs=True` を確認できる
+- `curl -H 'Host: ...'` で 200 が返る（Host/GatewayClass/参照先の不整合を検出できる）
 
 検証のホスト名（例: `sample-app.local`）は、次のいずれかで解決できるようにします。
 
@@ -163,7 +165,7 @@ bash examples/k8s/addons/storage/local-path/set-default-storageclass.sh
 | 領域 | 検証（Proxmox） | 本番（クラウド） |
 | --- | --- | --- |
 | LB | MetalLB | Cloud LB |
-| Ingress | ingress-nginx（例） | 組織標準（例: AWS Load Balancer Controller。旧称: ALB Ingress Controller） |
+| L7 入口 | Envoy Gateway / Gateway API | 組織標準の Gateway API 実装、または provider-managed Ingress（例: AWS Load Balancer Controller） |
 | Storage | local-path/NFS 等 | Cloud CSI（マネージド） |
 | Identity | 最小（kubeconfig/ローカル） | IAM/SSO/RBAC 統合 |
 
@@ -172,7 +174,9 @@ bash examples/k8s/addons/storage/local-path/set-default-storageclass.sh
 - Kubernetes: Cluster Networking (CNI): https://kubernetes.io/docs/concepts/cluster-administration/networking/
 - Calico（公式）: https://docs.tigera.io/calico/latest/
 - MetalLB（公式）: https://metallb.universe.tf/
-- ingress-nginx（公式）: https://kubernetes.github.io/ingress-nginx/
+- Envoy Gateway（公式）: https://gateway.envoyproxy.io/
+- Envoy Gateway Releases（公式）: https://gateway.envoyproxy.io/news/releases/
+- ingress-nginx（退役済み参照）: https://kubernetes.github.io/ingress-nginx/
 - Kubernetes Blog: Ingress NGINX Retirement: https://www.kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/
 - Gateway API（公式）: https://gateway-api.sigs.k8s.io/
 - Kubernetes: Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
@@ -184,6 +188,6 @@ bash examples/k8s/addons/storage/local-path/set-default-storageclass.sh
 
 ## 章末チェックリスト（3〜10）
 
-- [ ] 差分要因（LB/Storage/Ingress）の重要性を説明できる
+- [ ] 差分要因（LB/Storage/Gateway API・Ingress）の重要性を説明できる
 - [ ] 選定基準（要件/運用/変更容易性）を整理した
 - [ ] 変更のロールバック手段を準備した
