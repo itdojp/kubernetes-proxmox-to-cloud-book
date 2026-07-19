@@ -14,7 +14,8 @@ title: "検証済みバージョン一覧（Version Matrix）"
 ## 執筆時点 / レビュー時点
 
 - 初版執筆時点: 2026-02-23
-- 内容レビュー更新: 2026-05-23（Asia/Tokyo）
+- **情報の確認日**: 2026-05-23（Asia/Tokyo）
+- Proxmox VE の**確認日時点の現行版**と**本書で検証した版**は、下記の公式情報確認メモで区別する。実機検証の環境条件と証跡がない版は「検証済み」とは扱わない
 
 ## 検証対象（執筆時点の例示）
 
@@ -31,20 +32,20 @@ title: "検証済みバージョン一覧（Version Matrix）"
 | 項目 | 2026-05-23 時点の確認 | 本書での扱い |
 | --- | --- | --- |
 | Kubernetes | 公式 Releases では v1.36 系が最新で、サポート対象 minor は v1.36 / v1.35 / v1.34 | 本文の v1.35 例はサポート対象だが、新規構築は作業時点の supported minor と Version Skew Policy を確認する |
-| Proxmox VE | Proxmox VE 9.1 が利用可能 | 検証基盤の PVE version、snapshot / SDN / storage 差分を環境メモへ記録する |
+| Proxmox VE | **情報の確認日**: 2026-05-23（Asia/Tokyo）。**確認日時点の現行版**: Proxmox VE 9.2（2026-05-21 公開） | **本書で検証した版**: 実機検証した版の記録なし（検証済みとは扱わない）。検証基盤の PVE version、snapshot / SDN / storage 差分を環境メモへ記録する |
 | ingress-nginx | 公式告知では best-effort maintenance は 2026年3月まで。その後は release / bugfix / security update が提供されない前提 | 検証例としての利用に限定し、本番では Gateway API または維持される Controller への移行計画を必須にする |
 
 参照:
 
 - [Kubernetes Releases](https://kubernetes.io/releases/)
 - [Kubernetes Version Skew Policy](https://kubernetes.io/releases/version-skew-policy/)
-- [Proxmox Virtual Environment 9.1 available](https://www.proxmox.com/en/about/company-details/press-releases/proxmox-virtual-environment-9-1)
+- [Proxmox Virtual Environment 9.2 available](https://www.proxmox.com/en/about/company-details/press-releases/proxmox-virtual-environment-9-2)
 - [Kubernetes Blog: Ingress NGINX Retirement](https://www.kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)
 
 
 | コンポーネント | バージョン（例示/pinned） | 備考 |
 | --- | --- | --- |
-| Proxmox VE | 環境依存（2026-05-23 時点では Proxmox VE 9.1 を公式確認） | 3ノード（第3章）。手元の PVE version とストレージ/SDN 差分を記録する |
+| Proxmox VE | 環境依存（固定版なし。2026-05-23 確認時点の現行版は 9.2） | **本書で実機検証した版**: 記録なし（検証済みとは扱わない）。3ノード（第3章）。手元の PVE version とストレージ/SDN 差分を記録する |
 | Kubernetes | v1.35 系（例） / v1.36 系も確認対象 | kubeadm（第4章）。新規構築時は supported minor と Version Skew Policy を再確認する |
 | kubeadm config API | `kubeadm.k8s.io/v1beta4`（例示） | `examples/k8s/bootstrap/kubeadm-init.yaml` |
 | containerd | OS 標準（例） | CRI、`SystemdCgroup=true`（第4章） |
