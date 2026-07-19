@@ -12,6 +12,7 @@ const REQUIRED_FILES = [
   'examples/apps/sample-app/raw-yaml/gateway.yaml',
   'examples/apps/sample-app/raw-yaml/httproute.yaml',
   'examples/apps/sample-app/kustomize/base/kustomization.yaml',
+  'examples/apps/sample-app/kustomize/README.md',
   'examples/apps/sample-app/kustomize/overlays/cloud-prod/kustomization.yaml',
   'examples/apps/sample-app/kustomize/overlays/cloud-prod/ingress.yaml',
   'examples/apps/sample-app/helm/values.yaml',
@@ -97,6 +98,10 @@ function checkPolicy(contents) {
     '- httproute.yaml',
   ], errors);
   rejectMarkers(contents, 'examples/apps/sample-app/kustomize/base/kustomization.yaml', ['- ingress.yaml'], errors);
+  requireMarkers(contents, 'examples/apps/sample-app/kustomize/README.md', [
+    'kubectl -n sample-app delete ingress sample-app --ignore-not-found',
+    '移行中に二重の公開経路を残さない',
+  ], errors);
   requireMarkers(contents, 'examples/apps/sample-app/kustomize/overlays/cloud-prod/kustomization.yaml', [
     'namespace: sample-app',
     '- ingress.yaml',
@@ -176,6 +181,10 @@ function runSelfTest() {
 
   for (const testCase of cases) {
     const contents = readContents();
+    if (typeof contents[testCase.file] !== 'string') {
+      console.error(`❌ Ingress controller policy self-test could not read fixture source: ${testCase.file}`);
+      process.exit(1);
+    }
     contents[testCase.file] = testCase.mutate(contents[testCase.file]);
     if (checkPolicy(contents).length === 0) {
       console.error(`❌ Ingress controller policy self-test failed to reject: ${testCase.name}`);

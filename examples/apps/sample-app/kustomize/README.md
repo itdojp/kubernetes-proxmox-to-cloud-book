@@ -29,3 +29,14 @@ kubectl apply -k overlays/cloud-prod
 kubectl kustomize overlays/proxmox-dev
 kubectl kustomize overlays/cloud-prod
 ```
+
+## 旧 Ingress からの移行
+
+旧版の `proxmox-dev` を適用済みのクラスタでは、`kubectl apply -k` だけでは管理対象から外れた Ingress は削除されません。Gateway / HTTPRoute の到達確認後に、旧経路を明示的に削除します。
+
+```bash
+kubectl -n sample-app delete ingress sample-app --ignore-not-found
+kubectl -n sample-app get gateway,httproute
+```
+
+旧 ingress-nginx controller の停止は、同じ controller を利用する他 namespace の Ingress がないことを確認してから別の変更として実施してください。移行中に二重の公開経路を残さないことを完了条件にします。
