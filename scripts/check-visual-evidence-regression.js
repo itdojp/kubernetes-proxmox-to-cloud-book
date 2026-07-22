@@ -141,6 +141,15 @@ try {
     () => fs.rmSync(unsupportedJpeg, { force: true }));
   passed += 1;
 
+  const nestedControlName = path.join(fixtureRoot, 'docs/assets/images/screenshots/unreviewed/manifest.json');
+  expectFailure('nested manifest-name asset', 'unexpected screenshot asset',
+    () => {
+      fs.mkdirSync(path.dirname(nestedControlName), { recursive: true });
+      fs.writeFileSync(nestedControlName, '{"unreviewed":"asset"}\n');
+    },
+    () => fs.rmSync(path.dirname(nestedControlName), { recursive: true, force: true }));
+  passed += 1;
+
   const css = path.join(fixtureRoot, 'docs/assets/css/main.css');
   const baselineCss = fs.readFileSync(css, 'utf8');
   expectFailure('responsive CSS drift', 'published CSS must keep screenshots responsive',

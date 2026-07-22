@@ -73,12 +73,12 @@ function pngDimensions(buffer) {
   return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
 }
 
-function listScreenshotAssets(root) {
+function listScreenshotAssets(root, controlRoot = root) {
   if (!fs.existsSync(root)) return [];
   return fs.readdirSync(root, { withFileTypes: true }).flatMap((entry) => {
     const absolute = path.join(root, entry.name);
-    if (entry.isDirectory()) return listScreenshotAssets(absolute);
-    if (['README.md', 'manifest.json'].includes(entry.name)) return [];
+    if (entry.isDirectory()) return listScreenshotAssets(absolute, controlRoot);
+    if (root === controlRoot && ['README.md', 'manifest.json'].includes(entry.name)) return [];
     // The directory is PNG-only. Treat every other file as a candidate asset
     // so JPEG/WebP/SVG or disguised files cannot bypass manifest inventory.
     return [absolute];
