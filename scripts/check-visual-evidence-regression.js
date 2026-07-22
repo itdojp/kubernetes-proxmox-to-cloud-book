@@ -43,6 +43,18 @@ function expectFailure(name, evidence, mutate, restore) {
   }
 }
 
+function expectNoFailure(name, evidence, mutate, restore) {
+  try {
+    mutate();
+    const errors = validateVisualEvidence(fixtureRoot);
+    if (errors.some((error) => error.includes(evidence))) {
+      throw new Error(name + ': unexpected ' + JSON.stringify(evidence) + ':\n' + errors.join('\n'));
+    }
+  } finally {
+    restore();
+  }
+}
+
 let passed = 0;
 try {
   const cases = [
@@ -81,6 +93,24 @@ try {
 
   const image = path.join(fixtureRoot, 'docs/assets/images/screenshots/ch03-pve-cluster-join-01.png');
   const baselineImage = fs.readFileSync(image);
+  const symlinkTarget = path.join(fixtureRoot, 'outside-screenshot-root.txt');
+  expectFailure('tracked image symlink', 'image must be a regular file',
+    () => {
+      fs.writeFileSync(symlinkTarget, 'must not be read as image evidence\n');
+      fs.rmSync(image);
+      fs.symlinkSync(symlinkTarget, image);
+    },
+    () => {
+      fs.rmSync(image, { force: true });
+      fs.rmSync(symlinkTarget, { force: true });
+      fs.writeFileSync(image, baselineImage);
+    });
+  passed += 1;
+
+  expectNoFailure('exact image-size boundary', 'image exceeds 512000 bytes',
+    () => fs.writeFileSync(image, Buffer.concat([baselineImage, Buffer.alloc(500 * 1024 - baselineImage.length)])),
+    () => fs.writeFileSync(image, baselineImage));
+
   expectFailure('raster tamper', 'SHA-256 does not match the published image',
     () => fs.writeFileSync(image, Buffer.concat([baselineImage, Buffer.from('tamper')])),
     () => fs.writeFileSync(image, baselineImage));

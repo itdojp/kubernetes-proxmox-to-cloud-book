@@ -164,13 +164,16 @@ function validateVisualEvidence(repoRoot = path.resolve(__dirname, '..')) {
     let buffer;
     try {
       const stat = fs.lstatSync(imagePath);
-      if (!stat.isFile() || stat.isSymbolicLink()) errors.push(label + ': image must be a regular file');
+      if (!stat.isFile() || stat.isSymbolicLink()) {
+        errors.push(label + ': image must be a regular file');
+        return;
+      }
       buffer = fs.readFileSync(imagePath);
     } catch (error) {
       errors.push(label + ': image is missing or unreadable');
       return;
     }
-    if (buffer.length >= MAX_IMAGE_BYTES) errors.push(label + ': image exceeds ' + MAX_IMAGE_BYTES + ' bytes');
+    if (buffer.length > MAX_IMAGE_BYTES) errors.push(label + ': image exceeds ' + MAX_IMAGE_BYTES + ' bytes');
     const dimensions = pngDimensions(buffer);
     if (!dimensions) errors.push(label + ': image is not a valid PNG with IHDR');
     else if (entry.width !== dimensions.width || entry.height !== dimensions.height || entry.bytes !== buffer.length) {
