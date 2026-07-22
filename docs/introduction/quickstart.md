@@ -68,6 +68,11 @@ cd kubernetes-proxmox-to-cloud-book
 
 ### Step 1. Proxmox クラスタ（3ノード）
 
+<figure id="visual-evidence-quickstart-pve-login">
+  <img src="{{ '/assets/images/screenshots/quickstart-pve-login-01.png' | relative_url }}" alt="Proxmox VEの空欄ログイン画面。認証realmを確認してから資格情報を入力する判断点を示す">
+  <figcaption>取得: 2026-01-14 JST。対象OS/製品: Proxmox VE host（基盤OSは取得記録なし）/ Proxmox VE 9.1.1 Web UI。判断: User nameとPasswordが空欄で、realmがLinux PAMであることを確認してから認証する。公開確認: IP、hostname、username、secret、organizationは表示されていない。現行情報9.2では表示差分を再確認する。</figcaption>
+</figure>
+
 Proxmox Node 1（最初の 1 台で実行）:
 
 ```bash
