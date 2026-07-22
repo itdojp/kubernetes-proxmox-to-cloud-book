@@ -73,14 +73,15 @@ function pngDimensions(buffer) {
   return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
 }
 
-function listImageFiles(root) {
+function listScreenshotAssets(root) {
   if (!fs.existsSync(root)) return [];
   return fs.readdirSync(root, { withFileTypes: true }).flatMap((entry) => {
     const absolute = path.join(root, entry.name);
-    if (entry.isDirectory()) return listImageFiles(absolute);
-    // Include WebP in the inventory only so the PNG-only screenshot contract
-    // rejects it as an unexpected asset instead of silently ignoring it.
-    return /\.(?:png|webp)$/i.test(entry.name) ? [absolute] : [];
+    if (entry.isDirectory()) return listScreenshotAssets(absolute);
+    if (['README.md', 'manifest.json'].includes(entry.name)) return [];
+    // The directory is PNG-only. Treat every other file as a candidate asset
+    // so JPEG/WebP/SVG or disguised files cannot bypass manifest inventory.
+    return [absolute];
   });
 }
 
@@ -207,7 +208,7 @@ function validateVisualEvidence(repoRoot = path.resolve(__dirname, '..')) {
     if (count(page, marker) !== 1) errors.push(label + ': figure, alt, and immediate caption must exactly match the manifest');
   });
 
-  const inventory = listImageFiles(path.join(repoRoot, SCREENSHOT_ROOT))
+  const inventory = listScreenshotAssets(path.join(repoRoot, SCREENSHOT_ROOT))
     .map((file) => path.relative(repoRoot, file).split(path.sep).join('/')).sort();
   const expectedInventory = [...expectedFiles].sort();
   for (const file of inventory) if (!expectedFiles.has(file)) errors.push('unexpected screenshot asset: ' + file);
