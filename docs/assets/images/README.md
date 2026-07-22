@@ -16,12 +16,12 @@
 
 ## 命名規則（推奨）
 
-- `chXX-<topic>-NN.<ext>`（`<ext>` は `png` または `webp`）
-  - `XX`: 章番号（2桁）
+- `<scope>-<topic>-NN.<ext>`（`<ext>` は `png` または `webp`）
+  - `scope`: 章は `chXX`（`XX` は2桁）、導入ページは `quickstart` 等の固定slug
   - `topic`: 英小文字の kebab-case（例: `pve-vm-list` / `kubectl-get-nodes`）
   - `NN`: 章内の並び順（2桁）
   - 拡張子: 原則 PNG（`.png`）とし、必要に応じて WebP（`.webp`）も可とする
-  - 例: `ch03-pve-cluster-01.png`
+  - 例: `ch03-pve-cluster-01.png`、`quickstart-pve-login-01.png`
 
 ## 本文からの参照例
 

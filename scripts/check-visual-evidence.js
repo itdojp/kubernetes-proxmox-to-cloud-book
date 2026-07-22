@@ -12,8 +12,13 @@ const EXPECTED = [
     figureId: 'visual-evidence-quickstart-pve-login',
     sha256: '683adceb5bb8b5bf0f146e25a4204a3972bc5df8d553a4de25d797942246db7d',
     sourceKind: 'actual-web-ui',
+    sourceRepository: 'itdojp/proxmox_book',
+    sourceCommit: '41004602ee3416769fd78d8cba1b0ec95cef38c4',
+    sourceIntroductionCommit: '9592ad634e31d3c6a69e44615468d32c4b2df52f',
     sourcePath: 'images/part1/ch3/10-webui-first-login.png',
     sourceBlobSha: '286c983cec79884c923eed26d5870c6c226a3a79',
+    sourceUrl: 'https://github.com/itdojp/proxmox_book/blob/41004602ee3416769fd78d8cba1b0ec95cef38c4/images/part1/ch3/10-webui-first-login.png',
+    sourceSha256: '683adceb5bb8b5bf0f146e25a4204a3972bc5df8d553a4de25d797942246db7d',
   },
   {
     id: 'ch03-pve-cluster-join',
@@ -22,8 +27,13 @@ const EXPECTED = [
     figureId: 'visual-evidence-ch03-pve-cluster-join',
     sha256: '3ea62fefb76661d5fd19457464ffe27f010f70851c38ff10c85043335b237e96',
     sourceKind: 'actual-web-ui-crop',
+    sourceRepository: 'itdojp/proxmox_book',
+    sourceCommit: '41004602ee3416769fd78d8cba1b0ec95cef38c4',
+    sourceIntroductionCommit: '496e81ca986a0c3e264a714b1b9ec9c752b0be78',
     sourcePath: 'images/part3/ch7/03-join-cluster-wizard.png',
     sourceBlobSha: '77135f5bdd947f312b13f190951ae178cbfe57e3',
+    sourceUrl: 'https://github.com/itdojp/proxmox_book/blob/41004602ee3416769fd78d8cba1b0ec95cef38c4/images/part3/ch7/03-join-cluster-wizard.png',
+    sourceSha256: '67c356471cb8251a03d4d9f35f5b5eebbc13a4560562a1b423f416e794f52469',
   },
   {
     id: 'ch11-book-qa-success',
@@ -32,7 +42,11 @@ const EXPECTED = [
     figureId: 'visual-evidence-ch11-book-qa-success',
     sha256: 'ef09fb5029dc1127f91cb4d6685273a3edc9fdc2dae0677eb33a2f295801410a',
     sourceKind: 'actual-public-ci-ui-crop',
+    sourceRepository: 'itdojp/kubernetes-proxmox-to-cloud-book',
+    sourceCommit: '941af664c4385ea70b4f0134c17ea239147d93dc',
     sourceRunId: 29922510576,
+    sourceRunUrl: 'https://github.com/itdojp/kubernetes-proxmox-to-cloud-book/actions/runs/29922510576',
+    sourcePageSha256: '8ffafd602d22cf319e432c5b0fb497df6269a60df1315fcbebdf7e429040930c',
   },
 ];
 const SCREENSHOT_ROOT = 'docs/assets/images/screenshots';
@@ -109,11 +123,18 @@ function validateVisualEvidence(repoRoot = path.resolve(__dirname, '..')) {
     expectedFiles.add(entry.file);
     if (entry.sha256 !== expected.sha256) errors.push(label + ': manifest SHA-256 differs from the reviewed raster');
     if (entry.sourceKind !== expected.sourceKind) errors.push(label + ': source kind differs from the reviewed provenance');
-    if (expected.sourcePath && (entry.sourcePath !== expected.sourcePath || entry.sourceBlobSha !== expected.sourceBlobSha)) {
+    if (entry.sourceRepository !== expected.sourceRepository || entry.sourceCommit !== expected.sourceCommit) {
+      errors.push(label + ': source repository/commit differs from the reviewed provenance');
+    }
+    if (expected.sourcePath && (entry.sourceIntroductionCommit !== expected.sourceIntroductionCommit
+        || entry.sourcePath !== expected.sourcePath || entry.sourceBlobSha !== expected.sourceBlobSha
+        || entry.sourceUrl !== expected.sourceUrl || entry.sourceSha256 !== expected.sourceSha256)) {
       errors.push(label + ': immutable source path/blob differs from the reviewed provenance');
     }
-    if (expected.sourceRunId && entry.sourceRunId !== expected.sourceRunId) errors.push(label + ': source run differs from the reviewed provenance');
-    if (!/^https:\/\/github\.com\/itdojp\//.test(entry.sourceUrl || entry.sourceRunUrl || '')) errors.push(label + ': immutable public source URL is required');
+    if (expected.sourceRunId && (entry.sourceRunId !== expected.sourceRunId || entry.sourceRunUrl !== expected.sourceRunUrl
+        || entry.sourcePageSha256 !== expected.sourcePageSha256)) {
+      errors.push(label + ': source run/page differs from the reviewed provenance');
+    }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(entry.capturedAt || '') || !entry.dateBasis) errors.push(label + ': capture date and date basis are required');
     if (!entry.environment || !entry.versions || Object.keys(entry.versions).length === 0) errors.push(label + ': environment and versions are required');
     if (!entry.alt || !entry.alt.includes('判断点') || !entry.caption || !entry.caption.includes('判断:')) {

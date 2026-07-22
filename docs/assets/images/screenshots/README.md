@@ -3,7 +3,7 @@
 本ディレクトリには、本文で参照するスクリーンショットを配置します。
 
 - ルール: `docs/assets/images/README.md`
-- 命名: `chXX-<topic>-NN.<ext>`（`<ext>` は `png` または `webp`。例: `ch03-pve-cluster-01.png`）
+- 命名: `<scope>-<topic>-NN.<ext>`（`scope` は章の `chXX` または導入ページの `quickstart` 等。例: `ch03-pve-cluster-01.png`、`quickstart-pve-login-01.png`）
 - 追加時は秘匿情報（IP/ホスト名/トークン等）が残っていないことを目視確認する
 - P0 inventoryとprovenanceの正本: `manifest.json`
 - 検証: `npm run check:visual-evidence`（固定inventory、hash、寸法、本文参照、alt/caption、responsive CSS、unexpected assetをfail-closedで確認）
