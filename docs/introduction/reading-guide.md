@@ -27,7 +27,7 @@ title: "読み方ガイド（読者タイプ別）"
 
 ### 4. まず動作確認と完了判定を固めたい
 
-- Quickstart → [付録：スモークテストと完了チェックリスト](../appendices/smoke-test-checklist/) → [付録：トラブルシューティング](../appendices/troubleshooting/)
+- Quickstart → [付録：スモークテストと完了チェックリスト]({{ '/appendices/smoke-test-checklist/' | relative_url }}) → [付録：トラブルシューティング]({{ '/appendices/troubleshooting/' | relative_url }})
 
 ## Kustomize→Helm の学習順（理由）
 

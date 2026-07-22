@@ -1,6 +1,7 @@
 node_modules/
 
 # Jekyll (under docs/)
+_site/
 docs/_site/
 docs/.jekyll-cache/
 docs/.jekyll-metadata
@@ -15,4 +16,5 @@ Thumbs.db
 .vscode/
 
 # Temp
+.codex-local/
 *.tmp

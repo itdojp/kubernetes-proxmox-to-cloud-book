@@ -35,7 +35,7 @@ title: "本書の目的と前提"
 
 本書は「検証→本番」の観点を優先するため、検証環境の詳細は固定しません。執筆時点の前提は次を参照してください。
 
-- [検証済みバージョン一覧（Version Matrix）](../appendices/version-matrix/)
+- [検証済みバージョン一覧（Version Matrix）]({{ '/appendices/version-matrix/' | relative_url }})
 
 ## 破壊的操作に関する注意
 

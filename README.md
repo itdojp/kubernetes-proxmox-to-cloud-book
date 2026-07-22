@@ -45,8 +45,11 @@ front matter、ナビゲーション、公開アセットの整合性を確認�
 ```bash
 npm run check:security
 npm run check:metadata
+npm run check:introduction-appendix-links
 npm test
 ```
+
+`check:introduction-appendix-links` は、導入3ページから付録への7リンクについて、source route、Pages base path、fragment、対象ファイルの契約を検証します。Book QAではJekyll build後の6ページartifactと同じ7リンクも再検証します。
 
 ## ローカルビルド/プレビュー（Podman）
 

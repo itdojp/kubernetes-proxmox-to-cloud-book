@@ -41,7 +41,7 @@ Quickstart は「詳細な最適化」よりも「最短での成功体験」を
 
 注記:
 
-- 移行計画の判断例は第2章に、Quickstart 完了後の正常系確認は [付録：スモークテストと完了チェックリスト](../appendices/smoke-test-checklist/) に、切替時の最小チェックリストは [付録：トラブルシューティング](../appendices/troubleshooting/) に記載します。
+- 移行計画の判断例は第2章に、Quickstart 完了後の正常系確認は [付録：スモークテストと完了チェックリスト]({{ '/appendices/smoke-test-checklist/' | relative_url }}) に、切替時の最小チェックリストは [付録：トラブルシューティング]({{ '/appendices/troubleshooting/' | relative_url }}) に記載します。
 
 ## 最短ルート（概要）
 
@@ -295,8 +295,8 @@ sudo systemctl status containerd --no-pager
 
 ## 完了後の再確認
 
-- 正常系の固定は [付録：スモークテストと完了チェックリスト](../appendices/smoke-test-checklist/) を参照してください。
-- 失敗時の切り分けへ進む場合は [付録：トラブルシューティング](../appendices/troubleshooting/) を参照してください。
+- 正常系の固定は [付録：スモークテストと完了チェックリスト]({{ '/appendices/smoke-test-checklist/' | relative_url }}) を参照してください。
+- 失敗時の切り分けへ進む場合は [付録：トラブルシューティング]({{ '/appendices/troubleshooting/' | relative_url }}) を参照してください。
 
 ## まとめ
 
