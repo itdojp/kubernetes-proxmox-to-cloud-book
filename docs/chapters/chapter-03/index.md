@@ -52,6 +52,11 @@ Proxmox のクラスタは quorum（多数決）で成立します。
 
 クラスタ作成のコマンド例です（詳細は公式ドキュメントを参照してください）。
 
+<figure id="visual-evidence-ch03-pve-cluster-join">
+  <img src="{{ '/assets/images/screenshots/ch03-pve-cluster-join-01.png' | relative_url }}" alt="Proxmox VE Cluster Join画面。assisted joinを選び、情報とパスワードが空欄であることを確認して投入する判断点を示す">
+  <figcaption>取得: 2026-01-14 JST。対象OS/製品: Proxmox VE host（基盤OSは取得記録なし）/ Proxmox VE 9.1.1 Web UI。公開crop: Google Chrome 140.0.7339.207。判断: Assisted joinを選択し、encoded cluster informationとpasswordを安全な経路から投入する。公開確認: 元画面のIP、hostname、username、task履歴、organizationをcrop外へ除外した。現行情報9.2では表示差分を再確認する。</figcaption>
+</figure>
+
 ```bash
 # node-1（最初の1台で実行）
 sudo pvecm create lab-pve

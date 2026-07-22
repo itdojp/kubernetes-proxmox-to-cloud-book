@@ -72,6 +72,11 @@ kubectl apply -f examples/gitops/argocd/sample-app-application.yaml
 4. Chart/package 更新（Helm を採用する場合）
 5. GitOps リポジトリ（環境差分）へ反映 → Argo CD/Flux が同期
 
+<figure id="visual-evidence-ch11-book-qa-success">
+  <img src="{{ '/assets/images/screenshots/ch11-book-qa-success-01.png' | relative_url }}" alt="GitHub ActionsのBook QA成功job。qaが緑のチェックで完了していることをマージ判断点に使う画面">
+  <figcaption>取得: 2026-07-23 JST。対象OS/製品: Ubuntu 24.04 WSL2 / Google Chrome 140.0.7339.207 / GitHub Actions。判断: exact-main run 29922510576でqa jobが緑のチェックになったことを公開判断に使う。公開確認: repository、organization、actor、commit SHA、artifact digestをcrop外へ除外した。</figcaption>
+</figure>
+
 ## 公式ドキュメント（参照）
 
 - [Argo CD（公式）](https://argo-cd.readthedocs.io/)

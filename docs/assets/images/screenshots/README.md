@@ -3,8 +3,12 @@
 本ディレクトリには、本文で参照するスクリーンショットを配置します。
 
 - ルール: `docs/assets/images/README.md`
-- 命名: `chXX-<topic>-NN.<ext>`（`<ext>` は `png` または `webp`。例: `ch03-pve-cluster-01.png`）
+- 形式・命名: PNGのみ。`<scope>-<topic>-NN.png`（`scope` は章の `chXX` または導入ページの `quickstart` 等。例: `ch03-pve-cluster-01.png`、`quickstart-pve-login-01.png`）
 - 追加時は秘匿情報（IP/ホスト名/トークン等）が残っていないことを目視確認する
+- P0 inventoryとprovenanceの正本: `manifest.json`
+- 検証: `npm run check:visual-evidence`（固定inventory、hash、寸法、本文参照、alt/caption、responsive CSS、unexpected assetをfail-closedで確認）
+
+Issue #20のP0公開画像はactual UIだけを使用し、生成画像やplaceholderを使用しません。別の公開書籍から再利用する場合も、source repository/commit/blob/SHA-256をmanifestへ固定します。元画面に識別子がある場合は、公開画像にIP、hostname、username、email、token、secret、organizationが含まれない矩形だけを取得し、元画像を本リポジトリへ複製しません。
 
 ## スクリーンショット候補チェックリスト（章別）
 
@@ -18,6 +22,7 @@
 - Kubernetes クラスタ作成済み（例: 3ノード）
 - Envoy Gateway / サンプルアプリがデプロイ済み
 
+- [x] Proxmox UI: 空欄のログイン画面（PVE 9.1.1参考画面。現行9.2との差分確認が必要）
 - [ ] Proxmox UI: ログイン後の全体（Datacenter 直下の概要: ノード/リソース）
 - [ ] Proxmox UI: VM 一覧（`k8s-cp1`/`k8s-w1`/`k8s-w2` が見える状態）
 - [ ] Proxmox UI: VM Summary（IP/ステータス/Console 導線。IP はマスク）
@@ -34,6 +39,7 @@
 - Proxmox VE 3ノードクラスタ構成済み
 - ブリッジ（例: `vmbr0`/`vmbr1`）やストレージが作成済み
 
+- [x] Proxmox UI: Assisted Cluster Join（情報/passwordが空欄の安全な投入前状態）
 - [ ] Proxmox UI: Datacenter → Cluster（3ノード参加/quorum が見える）
 - [ ] Proxmox UI: Node → System → Network（`vmbr0`/`vmbr1` の構成。`vmbr1` が `inet manual` 前提）
 - [ ] Proxmox UI: Datacenter → Storage（検証環境のストレージ種別/配置の例）
@@ -114,7 +120,7 @@
 - [ ] Argo CD UI: Application 詳細（Resource tree / Sync 導線）
 - [ ] Argo CD UI: Diff 表示（差分のレビュー）
 - [ ] Argo CD UI: Sync 実行と結果（履歴/イベント）
-- [ ] GitHub UI: Actions の Book QA 成功画面（ワークフロー/ログへの導線）
+- [x] GitHub UI: Actions の Book QA 成功画面（workflow内の`qa`成功job）
 - [ ] GitHub UI: Pages build and deployment 成功画面（デプロイ完了の確認）
 
 ### 第12章：本番運用（`docs/chapters/chapter-12/index.md`）
