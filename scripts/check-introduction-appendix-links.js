@@ -168,6 +168,14 @@ function writeFixture(root) {
   }
 }
 
+function removeDirectoryIfEmpty(directory) {
+  try {
+    if (fs.readdirSync(directory).length === 0) fs.rmdirSync(directory);
+  } catch (error) {
+    if (!['ENOENT', 'ENOTEMPTY'].includes(error.code)) throw error;
+  }
+}
+
 function selfTest() {
   const tempParent = path.join(repoRoot, '.codex-local', 'tmp');
   fs.mkdirSync(tempParent, { recursive: true });
@@ -197,6 +205,8 @@ function selfTest() {
     if (!fragmentDetected) fail('unexpected appendix fragment fixture must fail');
   } finally {
     fs.rmSync(fixtureRoot, { recursive: true, force: true });
+    removeDirectoryIfEmpty(tempParent);
+    removeDirectoryIfEmpty(path.dirname(tempParent));
   }
   console.log('OK: negative fixtures detect old relative depth and unexpected fragment');
 }
