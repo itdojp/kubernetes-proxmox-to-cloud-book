@@ -129,6 +129,12 @@ try {
     () => fs.rmSync(extra, { force: true }));
   passed += 1;
 
+  const unsupportedWebp = path.join(fixtureRoot, 'docs/assets/images/screenshots/untracked.webp');
+  expectFailure('unsupported WebP asset', 'unexpected screenshot asset',
+    () => fs.writeFileSync(unsupportedWebp, Buffer.from('RIFF-not-published')),
+    () => fs.rmSync(unsupportedWebp, { force: true }));
+  passed += 1;
+
   const css = path.join(fixtureRoot, 'docs/assets/css/main.css');
   const baselineCss = fs.readFileSync(css, 'utf8');
   expectFailure('responsive CSS drift', 'published CSS must keep screenshots responsive',

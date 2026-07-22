@@ -12,15 +12,15 @@
 ## 配置
 
 - スクリーンショットは `docs/assets/images/screenshots/` 配下に配置する。
-- 形式は PNG を基本とし、必要に応じて WebP を検討する（可読性優先）。
+- `screenshots/manifest.json` で管理する実行証跡は、hash・寸法検査を統一するため PNG（`.png`）のみとする。WebP は使用しない。
 
 ## 命名規則（推奨）
 
-- `<scope>-<topic>-NN.<ext>`（`<ext>` は `png` または `webp`）
+- `<scope>-<topic>-NN.png`
   - `scope`: 章は `chXX`（`XX` は2桁）、導入ページは `quickstart` 等の固定slug
   - `topic`: 英小文字の kebab-case（例: `pve-vm-list` / `kubectl-get-nodes`）
   - `NN`: 章内の並び順（2桁）
-  - 拡張子: 原則 PNG（`.png`）とし、必要に応じて WebP（`.webp`）も可とする
+  - 拡張子: PNG（`.png`）のみ
   - 例: `ch03-pve-cluster-01.png`、`quickstart-pve-login-01.png`
 
 ## 本文からの参照例

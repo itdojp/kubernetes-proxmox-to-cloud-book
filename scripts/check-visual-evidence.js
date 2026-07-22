@@ -78,6 +78,8 @@ function listImageFiles(root) {
   return fs.readdirSync(root, { withFileTypes: true }).flatMap((entry) => {
     const absolute = path.join(root, entry.name);
     if (entry.isDirectory()) return listImageFiles(absolute);
+    // Include WebP in the inventory only so the PNG-only screenshot contract
+    // rejects it as an unexpected asset instead of silently ignoring it.
     return /\.(?:png|webp)$/i.test(entry.name) ? [absolute] : [];
   });
 }
@@ -118,6 +120,10 @@ function validateVisualEvidence(repoRoot = path.resolve(__dirname, '..')) {
     ids.add(entry.id);
     if (!expected || entry.id !== expected.id || entry.page !== expected.page || entry.file !== expected.file) {
       errors.push(label + ': id/page/file/order differs from the fixed P0 inventory');
+      return;
+    }
+    if (path.extname(entry.file).toLowerCase() !== '.png') {
+      errors.push(label + ': visual-evidence screenshots must use the PNG-only contract');
       return;
     }
     expectedFiles.add(entry.file);
