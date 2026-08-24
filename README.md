@@ -67,4 +67,4 @@ npm run dev:podman
 ## シリーズ情報
 
 - シリーズ: [ITエンジニア知識体系](https://itdojp.github.io/it-engineer-knowledge-architecture/)
-- 出版ガイド: [公開中の出版ガイド](https://itdojp.github.io/it-engineer-knowledge-architecture/docs/publishing/)
+- 出版ガイド: [公開中の出版ガイド](https://itdojp.github.io/it-engineer-knowledge-architecture/publishing/)
