@@ -1,7 +1,7 @@
 ---
 layout: book
 title: "Kubernetes: Proxmox検証からクラウド本番へ"
-description: "Proxmox上の検証Kubernetesからクラウド上の本番Kubernetesへ移行するための設計・手順・運用を、現実的な差分（LB/Storage/Identity/Observability等）を前提に整理する実務ガイド。"
+description: "Proxmox上の検証Kubernetesからクラウド上の本番Kubernetesへ移行するための設計・手順・運用を、現実的な差分（LB / Storage / Identity / Observability等）を前提に整理する実務ガイド。"
 author: "ITDO Inc."
 version: "0.1.0"
 ---
@@ -13,7 +13,7 @@ version: "0.1.0"
 ## 学習成果
 
 - 検証環境（Proxmox）と本番環境（クラウド）の責務分界を説明できる
-- 検証→本番で差分が出る箇所（LB/Storage/Identity/Observability 等）を前提に、作業の優先順位を設計できる
+- 検証→本番で差分が出る箇所（LB / Storage / Identity / Observability 等）を前提に、作業の優先順位を設計できる
 - raw YAML / Kustomize / Helm の使い分けを、運用要件（再現性/変更容易性/監査性）から判断できる
 - 検証・本番それぞれで破壊的操作のリスクを評価し、実行手順に注意事項を付与できる
 
@@ -59,7 +59,7 @@ Quickstart から入る場合は、次の 3 点だけ先に固定すると迷い
 
 検証と本番の差分が気になった場合は、第2章と付録の Version Matrix / トラブルシューティングを先に確認してから本文へ戻ると判断しやすくなります。
 
-## 実務適用前の Proxmox→Cloud 移行レビューゲート
+## 実務適用前の Proxmox → Cloud 移行レビューゲート
 
 本書の検証手順をクラウド本番へ昇格する前に、次の観点を必ず確認してください。
 

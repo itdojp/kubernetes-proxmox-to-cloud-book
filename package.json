@@ -2,7 +2,7 @@
   "name": "kubernetes-proxmox-to-cloud-book",
   "version": "0.1.0",
   "private": true,
-  "description": "Proxmox上の検証Kubernetesからクラウド上の本番Kubernetesへ移行するための設計・手順・運用を、現実的な差分（LB/Storage/Identity/Observability等）を前提に整理する実務ガイド。",
+  "description": "Proxmox上の検証Kubernetesからクラウド上の本番Kubernetesへ移行するための設計・手順・運用を、現実的な差分（LB / Storage / Identity / Observability等）を前提に整理する実務ガイド。",
   "license": "CC-BY-NC-SA-4.0",
   "author": "ITDO Inc.",
   "repository": {
